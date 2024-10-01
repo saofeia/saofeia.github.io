@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Saofe1a">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/10/01/thinkphp3.2.3 sql注入/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="前言最近投了星盟网安团队，面试的时候y2shin大师傅拷打我thinkphp框架是否在本地搭环境调试过，说实话之前一直是看着其他师傅的博客来学习，尽管最后如愿进入了预备队，但觉得还是有必要本地调试一下来提升代码审计能力，于是打算利用国庆假期把thinkphp系列的漏洞都debug完 环境搭建Github获取：https:&#x2F;&#x2F;github.com&#x2F;liu21st&#x2F;thinkphp ，把文件解压在ap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinkphp3.2.3 sql注入">
+<meta property="og:url" content="http://example.com/2024/10/01/Thinkphp3.2.3%20sql%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言最近投了星盟网安团队，面试的时候y2shin大师傅拷打我thinkphp框架是否在本地搭环境调试过，说实话之前一直是看着其他师傅的博客来学习，尽管最后如愿进入了预备队，但觉得还是有必要本地调试一下来提升代码审计能力，于是打算利用国庆假期把thinkphp系列的漏洞都debug完 环境搭建Github获取：https:&#x2F;&#x2F;github.com&#x2F;liu21st&#x2F;thinkphp ，把文件解压在ap">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-05fae330566271aafe605f048e6d7f70_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-abd49ed50776dbb8a56cf46df3a8168f_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-7c4bac129f157d2ff048cf9d18f10beb_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-038a973d1b80ed0fcf84e913fc460575_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-447de876874d1f1fe477b66ae9a1c0dc_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-d959a92c7c8da55814a8b4f6b420b9e1_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-40fb19e957f22b7a689be80d7e7a7ed4_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-39b18e6ce0efbc0a5dd7d7a490e81b3b_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-4ef71dd5fb88d892f5929d1b43803923_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-f3a0e9f72b4615e130034467aa9ef09f_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-51f1403b2f7bcb67e1890bf6cd4770be_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-14e0ee1c31e9a4c2e8dfca348bec7926_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-f947682e25d46450d918571053eaa52e_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-78b66051db3fb5482486b4b8eb649c73_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-4c0a4573ec4845ce939a1c0c7a944f85_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-3e76e8d472f83d8c00599cb3ecc816d0_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-860a282eb45719c4fb2c2f2cd567890e_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-24ba8797f42f3120fd69139f977d99ac_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-0a3517eb5fd088a47c588750b424530b_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-202b6dc635de5ea4ff831a13923c345f_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-9939ed22c6ddc5d4fc701bb50ed167cb_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-0f23bd288af121209c117ae301bb23f0_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-2f6d25ee3ac38ef76db26ccb13a3d3c3_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-447de876874d1f1fe477b66ae9a1c0dc_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-b2664c93fb91f74fe5e7ba07588b8e9c_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-bb97c72a92313525da2673aed22a36a8_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-bcc5cfdb91acf06d22432b8a7309f0a9_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-399d71a853d3e3eac69c930a6ad768aa_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-ef8cdf4b944f17ab5c8b17632010f10a_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-1e4f6326bc19573bcc62a0a6cb0a496c_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-4f7638292cce7450f01cc5fa5760732d_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-ef1b8d1c89baa2607ebcd3d9cb71baa2_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-7499b9e817cd94d1791ba3469dbcd59d_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-a2c5eb8320fd534a1c3bd2b185885a03_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-9e2a7a40ebca6f95b3b1618f1649d66c_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-008c97707391c78cd7710bf633496a9c_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-e21f4a60b2f75387cd279108fe13bea2_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-61c35431c9edc3b1de994066d26e7967_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-3bbd20a8854aeb9fe74e6402e0ac17cc_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-f734cc8128ebe59fb2c29f08de268ce9_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-f022d3077f425929a130877b75be1d74_1440w.webp?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-f23b1d1f60bb8e33d322d87a0be1ac4c_1440w.webp?source=d16d100b">
+<meta property="article:published_time" content="2024-10-01T15:49:09.215Z">
+<meta property="article:modified_time" content="2024-10-01T15:49:04.276Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picx.zhimg.com/80/v2-05fae330566271aafe605f048e6d7f70_1440w.webp?source=d16d100b">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/chelsea.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/chelsea.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/chelsea.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Thinkphp3.2.3 sql注入 -
+        
+        Saofe1a
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Saofe1a","subtitle":{"text":["Better late than never","感谢所有在CTF道路上帮助过我的师傅们","Man proposes,God disposes"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives/","icon":"fa-regular fa-archive"},"About":{"path":"/about/","icon":"fa-regular fa-user"},"Links":{"path":"/links/","icon":"fa-regular fa-link"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        Saofe1a
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Saofe1a
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives/"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/about/"
+                                        >
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/links/"
+                                        >
+                                    <i class="fa-regular fa-link fa-fw"></i>
+                                    LINKS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives/"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/about/"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-regular fa-user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/links/"
+                        >
+                            <span>
+                                LINKS
+                            </span>
+                            
+                                <i class="fa-regular fa-link fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Thinkphp3.2.3 sql注入</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Saofe1a</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-01 23:49:09</span>
+        <span class="mobile">2024-10-01 23:49:09</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-01 23:49:04</span>
+            <span class="mobile">2024-10-01 23:49:04</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>10 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近投了星盟网安团队，面试的时候y2shin大师傅拷打我thinkphp框架是否在本地搭环境调试过，说实话之前一直是看着其他师傅的博客来学习，尽管最后如愿进入了预备队，但觉得还是有必要本地调试一下来提升代码审计能力，于是打算利用国庆假期把thinkphp系列的漏洞都debug完</p>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>Github获取：<a class="link"   target="_blank" rel="noopener" href="https://github.com/liu21st/thinkphp" >https://github.com/liu21st/thinkphp <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，把文件解压在apache的web根目录即可</p>
+<p>在浏览器访问此文件，如：<code>http://localhost:8888/thinkphp-master/</code>出现如下界面即代表成功<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-05fae330566271aafe605f048e6d7f70_1440w.webp?source=d16d100b"
+                     
+                ><br>环境搭建这里真的踩了好多坑，师傅们的博客都说的不够详细<br>我们得先访问根目录中的thinkphp文件，整个框架会被初始化，自动生成模块，不然接下来的控制器配置会非常无厘头，我就是在这里墨迹了巨长他妈长的时间，一个劲在子目录找不存在的文件</p>
+<p>数据库配置：打开<code>ThinkPHP/Conf/convention.php</code></p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 数据库设置 */</span></span><br><span class="line"><span class="string">&#x27;DB_TYPE&#x27;</span>                =&gt; <span class="string">&#x27;mysql&#x27;</span>, <span class="comment">// 数据库类型</span></span><br><span class="line"><span class="string">&#x27;DB_HOST&#x27;</span>                =&gt; <span class="string">&#x27;localhost&#x27;</span>, <span class="comment">// 服务器地址</span></span><br><span class="line"><span class="string">&#x27;DB_NAME&#x27;</span>                =&gt; <span class="string">&#x27;thinkphp&#x27;</span>, <span class="comment">// 数据库名</span></span><br><span class="line"><span class="string">&#x27;DB_USER&#x27;</span>                =&gt; <span class="string">&#x27;root&#x27;</span>, <span class="comment">// 用户名</span></span><br><span class="line"><span class="string">&#x27;DB_PWD&#x27;</span>                 =&gt; <span class="string">&#x27;root&#x27;</span>, <span class="comment">// 密码</span></span><br><span class="line"><span class="string">&#x27;DB_PORT&#x27;</span>                =&gt; <span class="string">&#x27;3306&#x27;</span>, <span class="comment">// 端口</span></span><br></pre></td></tr></table></figure></div>
+
+<p>再向我们的mysql写入这个库，接着用Navicat连接<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-abd49ed50776dbb8a56cf46df3a8168f_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<h1 id="where注入"><a href="#where注入" class="headerlink" title="where注入"></a>where注入</h1><h2 id="控制器配置"><a href="#控制器配置" class="headerlink" title="控制器配置"></a>控制器配置</h2><p>修改<code>Application/Home/Controller/IndexController.class.php</code>的index方法</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="variable">$data</span> = <span class="title function_ invoke__">M</span>(<span class="string">&#x27;users&#x27;</span>)-&gt;<span class="title function_ invoke__">find</span>(<span class="title function_ invoke__">I</span>(<span class="string">&#x27;GET.id&#x27;</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$data</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>传参得到我们的查询结果:<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-7c4bac129f157d2ff048cf9d18f10beb_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><p><code>?id[where]=1 and 1=updatexml(1,concat(0x7e,(select password from users limit 1),0x7e),1)%23</code></p>
+<h2 id="Debug调试"><a href="#Debug调试" class="headerlink" title="Debug调试"></a>Debug调试</h2><p>在<code>$data</code>处下个断点，先试试普通的sql注入会发生什么，在浏览器传入<code>id=1&#39;</code><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-038a973d1b80ed0fcf84e913fc460575_1440w.webp?source=d16d100b"
+                     
+                ><br>这个M方法处理的是users，并不是我们传入的值，是用来建立模型的，不用管，直接步出，进入到<code>I()</code>方法，<code>I()</code>函数中获取参数，会经过<code>ThinkPHP/Common/functions.php:391</code> <code>htmlspecialchars()</code>进行处理</p>
+<p>总之，<code>I</code>方法用来获取我们通过GET传入的id值，然后传入find方法，跟进find方法，经过赋值后的where变量是一个array（借用pazuris大师傅的图）<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-447de876874d1f1fe477b66ae9a1c0dc_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>find函数最关键的部分如下，这个select就是正式进行查询，我们后面会讲到：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-d959a92c7c8da55814a8b4f6b420b9e1_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>跟进<code>_parseOptions()</code>方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-40fb19e957f22b7a689be80d7e7a7ed4_1440w.webp?source=d16d100b"
+                     
+                ><br><code>_parseOptions()</code>对表达式进行分析（也就是处理我们的查询语句，options是一个array，里面有where，而where也是array，里面放了id&#x3D;<code>&quot;1&#39;&quot;</code>）</p>
+<p><code>_parseOptions()</code>前面都在自动获取表名，指定表之类的操作，字段类型验证在后面：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-39b18e6ce0efbc0a5dd7d7a490e81b3b_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>可以看到这个字段类型验证的条件是where是一个array，后续我们sql注入做文章的地方就是这里，先看看如何进行字段验证，关键函数是parseType，跟进看看：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-4ef71dd5fb88d892f5929d1b43803923_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>简单来说就是根据表字段的类型来将传入的值强转，可以看到我们传入的<code>1&#39;</code>被intval转成了1（id字段的类型是int），sql注入失效<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-f3a0e9f72b4615e130034467aa9ef09f_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>可以通过将id字段的类型设置成varchar看看会怎么处理字符串，是否存在sql注入。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-51f1403b2f7bcb67e1890bf6cd4770be_1440w.webp?source=d16d100b"
+                     
+                ><br>改了之后可以重新断点跳到这个地方，可以看到是成功跳过了所有的if，回到了parseOptions再回到find函数中，来到find中第二个关键函数select<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-14e0ee1c31e9a4c2e8dfca348bec7926_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>select中的关键是buildSelectSql，就是这个函数利用我们传入的options生成了sql查询语句，跟进：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-f947682e25d46450d918571053eaa52e_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>parsesql对我们的options进行了处理，跟进<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-78b66051db3fb5482486b4b8eb649c73_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>看到了一堆函数，用来处理sql语句的不同逻辑</p>
+<p>一通跳转到了处理我们传入的值的函数，parseValue，注意看此时传入前的value仍然是<code>1&#39;</code><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-4c0a4573ec4845ce939a1c0c7a944f85_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>这行代码调用了escapeString来处理我们value，跟进：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-3e76e8d472f83d8c00599cb3ecc816d0_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>这个addslashes直接宣告了常规sql注入的终结，因为会转义单引号，可以看到我们的value变成了<code>1\</code>，失去效果。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-860a282eb45719c4fb2c2f2cd567890e_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>既然传字符串不行，可以考虑传入一个<strong>数组</strong>，而联想到刚刚的判断，可以传入<code>?id[where]=1</code>看看，因为可以直接跳过强转部分，理由稍后阐明（不需要再使得字段是varchar，是int也行）</p>
+<p>从头开始一路跟进，回调<code>think_filter</code>函数进行过滤<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-24ba8797f42f3120fd69139f977d99ac_1440w.webp?source=d16d100b"
+                     
+                ><br>跟进到find方法中会发现这个options里的where不再是一个数组array，而是一个字符串。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-0a3517eb5fd088a47c588750b424530b_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>继续跟进，既然where不再是array，这个parseOptions里的字段类型验证直接失效，更不会到parseType中发生强转，成功绕过第一层，<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-202b6dc635de5ea4ff831a13923c345f_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>回到find中，到第二个关键函数parseWhere处理了where（因为我们现在相当于传入的是where，处理我们传入的就只有parseWhere，而不会像上次一样传入parseValue处理，自然也就绕过了addslashes），并且直接把where字符串内容返回<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-9939ed22c6ddc5d4fc701bb50ed167cb_1440w.webp?source=d16d100b"
+                     
+                ><br>最后一通跳转返回parsesql函数，返回了sql语句<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-0f23bd288af121209c117ae301bb23f0_1440w.webp?source=d16d100b"
+                     
+                ><br>我配置的环境是已经修复过的版本，pazuris师傅的未修复的版本是这样的，sql这里比我多了个WHERE 1<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-2f6d25ee3ac38ef76db26ccb13a3d3c3_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>这个where后面的值就是我们传入的1，从而可以随意控制值来进行sql注入，相当于没有了任何验证，传入<code>?id[where]=id=-1 union select 1,group_concat(flag4s),3,4 from flags</code>（后面一整个字符串直接拼到sql语句中）得到这一题的flag。</p>
+<p><strong>总结：</strong></p>
+<ol>
+<li>传入id值时正常逻辑，<code>find()-&gt;_parseOptions()-&gt;_parseTypes()-&gt;select()-&gt;parseSql()-&gt;parseValue()</code>，其中<code>_parseTypes()</code>是第一层需要绕过的点，<code>parseValue</code>是第二层需要绕过的点</li>
+<li>传入<code>?id[where]=1</code>，绕过上述两层，<code>find()-&gt;_parseOptions()-&gt;select()-&gt;parseSql()-&gt;parseWhere()</code>，直接将内容拼接到sql语句中。</li>
+</ol>
+<p><strong>修复后：</strong></p>
+<p>可以对比下前后两个版本（白色背景的是pazuris大师傅的）<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-447de876874d1f1fe477b66ae9a1c0dc_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-b2664c93fb91f74fe5e7ba07588b8e9c_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>可知重要的改动是把options变成了this-&gt;options，并且不再直接将options传入parseOptions，this-&gt;options初始为空，需要赋值，而如果传数组，就没法赋值where给this-&gt;Options，所以相当于到parseOptions中我们根本就没有where（直接传数组相当于啥也没传），自然绕不过第二层，不再可以注入。</p>
+<h1 id="exp注入"><a href="#exp注入" class="headerlink" title="exp注入"></a>exp注入</h1><h2 id="控制器配置-1"><a href="#控制器配置-1" class="headerlink" title="控制器配置"></a>控制器配置</h2><p>继续修改index方法</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$User</span> = <span class="title function_ invoke__">D</span>(<span class="string">&#x27;Users&#x27;</span>);</span><br><span class="line">    <span class="variable">$map</span> = <span class="keyword">array</span>(<span class="string">&#x27;username&#x27;</span> =&gt; <span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>]);</span><br><span class="line">    <span class="comment">// $map = array(&#x27;username&#x27; =&gt; I(&#x27;username&#x27;));</span></span><br><span class="line">    <span class="variable">$user</span> = <span class="variable">$User</span>-&gt;<span class="title function_ invoke__">where</span>(<span class="variable">$map</span>)-&gt;<span class="title function_ invoke__">find</span>();</span><br><span class="line">    <span class="title function_ invoke__">var_dump</span>(<span class="variable">$user</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>为什么用GET获取而不用I方法获取，因为I方法内部有过滤，不允许传入参数值以exp开头（后面分析payload就知道为什么要用exp开头了）。直接调用where再调用find主要是为了保证where是我们传入的array</p>
+<h2 id="payload-1"><a href="#payload-1" class="headerlink" title="payload"></a>payload</h2><p><code>http://localhost:8888/thinkphp-master/index.php?username[0]=exp&amp;username[1]==-1 union select 1,2,3</code></p>
+<h2 id="Debug调试-1"><a href="#Debug调试-1" class="headerlink" title="Debug调试"></a>Debug调试</h2><p>打上断点，按下F5，浏览器传入payload，又是沟槽的debug的一天<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-bb97c72a92313525da2673aed22a36a8_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>先跟进where方法，一句话：把我们传入的这个数组<code>array(&#39;username&#39; =&gt; $_GET[&#39;username&#39;])</code>传给了<code>$this-&gt;options[&#39;where&#39;]</code><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-bcc5cfdb91acf06d22432b8a7309f0a9_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>继续跟进<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-399d71a853d3e3eac69c930a6ad768aa_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>跟进到parseOptions中，和之前一样，进行字段验证，这个val变量是一个数组，而is_scalar方法判断一个变量是否是标量（存储单个值的数据类型），这里if判断失败，自然实现了绕过。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-ef8cdf4b944f17ab5c8b17632010f10a_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>进入我们的老朋友select方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-1e4f6326bc19573bcc62a0a6cb0a496c_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>进入buildSelectSql方法，然后跳到parseSql一大堆函数，前面的验证都和之前一样，直接跳到不一样的地方，parseWhere，由于我们现在的where是一个二维数组（应该可以这么说），自然处理方式和之前不同<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-4f7638292cce7450f01cc5fa5760732d_1440w.webp?source=d16d100b"
+                     
+                ><br>可以看到whereStr现在是空的，也就是说他的值即为parseWhereItem处理的结果<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-ef1b8d1c89baa2607ebcd3d9cb71baa2_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>跟进到parseWhereItem</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">elseif</span> (<span class="string">&#x27;bind&#x27;</span> == <span class="variable">$exp</span>) &#123;</span><br><span class="line">    <span class="comment">// 使用表达式</span></span><br><span class="line">    <span class="variable">$whereStr</span> .= <span class="variable">$key</span> . <span class="string">&#x27; = :&#x27;</span> . <span class="variable">$val</span>[<span class="number">1</span>];</span><br><span class="line">&#125; <span class="keyword">elseif</span> (<span class="string">&#x27;exp&#x27;</span> == <span class="variable">$exp</span>) &#123;</span><br><span class="line">    <span class="comment">// 使用表达式</span></span><br><span class="line">    <span class="variable">$whereStr</span> .= <span class="variable">$key</span> . <span class="string">&#x27; &#x27;</span> . <span class="variable">$val</span>[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-7499b9e817cd94d1791ba3469dbcd59d_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>这个exp变量获取的是<code>var[0]</code>的值，也就是我们传入的第一个值，就是exp，可以看到这时候whereStr就是key拼上<code>var[1]</code>，也就是查询的username拼上我们传入第二个值。细心的同学会发现还有一个bind判断，不急，这是下文的主角<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-a2c5eb8320fd534a1c3bd2b185885a03_1440w.webp?source=d16d100b"
+                     
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-9e2a7a40ebca6f95b3b1618f1649d66c_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>如此看来，whereStr的值这不就是联合注入吗<br>然后这个语句就毫无过滤的传回去拼到where查询了，实现了sql注入。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-008c97707391c78cd7710bf633496a9c_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p><strong>总结：</strong><br>往where方法传入数组，第一个值为exp，第二个值为&#x3D;-1 union ….，就可以在parseWhere构建whereStr，从而实现sql注入。比如传<code>?username[0]=exp</code>效果如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from `users` where `username`  $val[1]  limit 1</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="bind注入"><a href="#bind注入" class="headerlink" title="bind注入"></a>bind注入</h1><h2 id="控制器配置-2"><a href="#控制器配置-2" class="headerlink" title="控制器配置"></a>控制器配置</h2><p>继续修改index</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$User</span> = <span class="title function_ invoke__">M</span>(<span class="string">&quot;Users&quot;</span>);</span><br><span class="line">    <span class="variable">$user</span>[<span class="string">&#x27;id&#x27;</span>] = <span class="title function_ invoke__">I</span>(<span class="string">&#x27;id&#x27;</span>);</span><br><span class="line">    <span class="variable">$data</span>[<span class="string">&#x27;password&#x27;</span>] = <span class="title function_ invoke__">I</span>(<span class="string">&#x27;password&#x27;</span>);</span><br><span class="line">    <span class="variable">$valu</span> = <span class="variable">$User</span>-&gt;<span class="title function_ invoke__">where</span>(<span class="variable">$user</span>)-&gt;<span class="title function_ invoke__">save</span>(<span class="variable">$data</span>);</span><br><span class="line">    <span class="title function_ invoke__">var_dump</span>(<span class="variable">$valu</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="payload-2"><a href="#payload-2" class="headerlink" title="payload"></a>payload</h2><p><code>?id[0]=bind&amp;id[1]=0 and updatexml(1,concat(0x7e,user(),0x7e),1)&amp;passwd=1</code></p>
+<h2 id="Debug调试-2"><a href="#Debug调试-2" class="headerlink" title="Debug调试"></a>Debug调试</h2><p>打好断点，跟进和上文如出一辙的where方法，进入save方法，save先使用facade方法来处理我们的data<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-e21f4a60b2f75387cd279108fe13bea2_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>跟进facade方法，这个方法是检查数据字段并进行过滤，看到了经典的检查和强转，不过我们也不是用data进行注入<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-61c35431c9edc3b1de994066d26e7967_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>然后进入update方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-3bbd20a8854aeb9fe74e6402e0ac17cc_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>跟进parseSet</p>
+<p>很抱歉的通知您，由于Saofe1a师傅手贱，不小心把框架中的代码误删且无法恢复，不愿意再重新配环境了，于是接下来会借用其他师傅的图</p>
+<p>跟进bindParam看看：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-f734cc8128ebe59fb2c29f08de268ce9_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>从而得到bind的值<code>:0 = 1</code>，后面就是常规的bind注入和上面的exp注入一样，会产生whereStr<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-f022d3077f425929a130877b75be1d74_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>返回str构成的sql语句：<br>UPDATE <code>users</code> SET <code>password</code>&#x3D;:0 WHERE <code>id</code> &#x3D; :0 and updatexml(1,concat(0x7e,user(),0x7e),1)</p>
+<p>进入最终的excute方法：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-f23b1d1f60bb8e33d322d87a0be1ac4c_1440w.webp?source=d16d100b"
+                     
+                ></p>
+<p>重点在最下面那个最终的queryStr生成，简单来说strtr就是把所有的:0都替换成了1（运用了之前那个bind规则，当我们的<code>id[1]</code>传入的是0时，刚好拼出一个:0，从而实现替换，使得sql报错）</p>
+<p>替换完得到最终的语句，成功sql注入：<br>UPDATE <code>users</code> SET <code>password</code>&#x3D;’1’ WHERE <code>id</code> &#x3D; ‘1’ and updatexml(1,concat(0x7e,user(),0x7e),1)</p>
+<p><strong>总结：</strong></p>
+<p>首先第一个<code>id[0]</code>&#x3D;bind传入是为了在parseWhere中按bind处理，拼接返回whereString，</p>
+<p>然后第二个<code>id[1]</code>&#x3D;0 and updatexml(1,concat(0x7e,user(),0x7e),1)是用来报错注入的语句（因为是save操作，并不会有回显，只能用报错注入），这个0是强制的，因为可以替换的仅仅为<code>:0</code>，如果不是，最后就不会替换，从而报错（但是没有注入）。</p>
+<p>最后第三个passwd的值就是希望<code>:0</code>替换成的值，由于这里是id，随便输个数字就行。</p>
+<p><strong>参考链接：</strong><a class="link"   target="_blank" rel="noopener" href="https://pazuris.cn/2023/08/16/ThinkPHP3-2-3SQL%E6%B3%A8%E5%85%A5%E5%A4%8D%E7%8E%B0/#payload3%EF%BC%9Abind%E6%B3%A8%E5%85%A5" >ThinkPHP3.2.3SQL注入复现 | Pazuris - reoreo~~ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Thinkphp3.2.3 sql注入</li>
+        <li><strong>Author:</strong> Saofe1a</li>
+        <li><strong>Created at
+                :</strong> 2024-10-01 23:49:09</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-01 23:49:04
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://saofeia.github.io/2024/10/01/Thinkphp3.2.3 sql注入/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/07/19/hello-world/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Hello World</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Thinkphp3.2.3 sql注入</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#where%E6%B3%A8%E5%85%A5"><span class="nav-text">where注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-text">控制器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#payload"><span class="nav-text">payload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug%E8%B0%83%E8%AF%95"><span class="nav-text">Debug调试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#exp%E6%B3%A8%E5%85%A5"><span class="nav-text">exp注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E9%85%8D%E7%BD%AE-1"><span class="nav-text">控制器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#payload-1"><span class="nav-text">payload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug%E8%B0%83%E8%AF%95-1"><span class="nav-text">Debug调试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bind%E6%B3%A8%E5%85%A5"><span class="nav-text">bind注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E9%85%8D%E7%BD%AE-2"><span class="nav-text">控制器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#payload-2"><span class="nav-text">payload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug%E8%B0%83%E8%AF%95-2"><span class="nav-text">Debug调试</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Saofe1a</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        2 posts in total
+                    </span>
+                    
+                        <span>
+                            2.8k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

